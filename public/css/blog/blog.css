@@ -1,0 +1,20 @@
+/*
+Theme Name: Simple, Yet Minimalistic
+Author: Muhammad Rizki Andika
+Author URI: http://mrandika.space
+Description: Minimal is the new Design Language.
+Version: 1.0
+*/
+
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans');
+
+* {
+    box-sizing: border-box;
+
+}
+
+body {
+    background-color: #f9f9f9;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
