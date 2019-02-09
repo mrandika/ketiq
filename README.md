@@ -11,7 +11,7 @@
 Tugas Laravel 
 
 Pertama :
-- Membuat Autentikasi, Home, Profile, Portofolio, dan Blog menggunakan framework Laravel dengan bantuan Blade sebagai Template Engine, implementasi CRUD untuk artikel.
+- Membuat Autentikasi, Home, Profile, Portofolio, dan Blog menggunakan framework Laravel dengan bantuan Blade sebagai Template Engine.
 
 Kedua :
 - Implementasi CRUD untuk Blog
