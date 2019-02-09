@@ -31,7 +31,8 @@
                 </span>
                 @endif</div>
             <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Log In</button></div>
-        </form>
+            <a href="{{url('register')}}">Become a Contributor</a>
+            </form>
     </div>
 </body>
 

@@ -25,14 +25,11 @@ Route::get('portofolio', function () {
 
 Route::get('blog', function () {
     $posts = DB::table('posts')->get();
-    $categories = DB::table('categories')->get();
-    return view('blog', ['posts' => $posts], ['categories' => $categories]);
-});
-
-Route::get('view', function () {
-    return view('view');
+    return view('blog', ['posts' => $posts]);
 });
 
 Auth::routes();
+
+Route::resource('posts', 'PostController');
 
 Route::get('/home', 'HomeController@index')->name('home');

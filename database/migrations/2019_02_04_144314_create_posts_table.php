@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTablePosts extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,8 +15,14 @@ class CreateTablePosts extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('hasFeatured', 3)->nullable();
+            $table->string('featuredImage')->nullable();
+            $table->string('mime')->nullable();
+            $table->string('original_filename')->nullable();
+            $table->integer('categoriesId');
             $table->string('title');
             $table->text('content');
+            $table->string('uploadedBy');
             $table->timestamps();
         });
     }
@@ -28,6 +34,6 @@ class CreateTablePosts extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_posts');
+        Schema::dropIfExists('posts');
     }
 }

@@ -18,3 +18,10 @@ body {
     font-family: 'IBM Plex Sans', sans-serif;
 }
 
+.card-text {
+    width:100%; 
+    overflow:hidden; 
+    text-overflow:ellipsis;
+    white-space:nowrap; 
+}
+
