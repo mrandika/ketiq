@@ -22,7 +22,8 @@ class PostController extends Controller
     {
         //
         $posts=\App\Post::all();
-        return view('/admin',compact('posts'));  
+        $categories=\App\Categorie::all();
+        return view('admin/admin',compact('posts', 'categories'));  
     }
 
     /**
@@ -33,7 +34,8 @@ class PostController extends Controller
     public function create()
     {
         //
-        return view('create');
+        $categories=\App\Categorie::all();
+        return view('admin/post/createPost', compact('categories'));
     }
 
     /**
@@ -73,7 +75,7 @@ class PostController extends Controller
         $post->uploadedBy = $request->get('author');
         $post->save();
         
-        return redirect('/posts')->with('success', 'Data post telah ditambahkan'); 
+        return redirect('blog/admin')->with('success', 'Data post telah ditambahkan'); 
     }
 
     /**
@@ -99,7 +101,8 @@ class PostController extends Controller
     {
         //
         $post = \App\Post::find($id);
-        return view('edit',compact('post','id'));  
+        $categories =\App\Categorie::all();
+        return view('admin/post/editPost',compact('post','id', 'categories'));  
     }
 
     /**
@@ -113,7 +116,7 @@ class PostController extends Controller
     {
         //
         $validatedData = $request->validate([
-            'title' => 'required|unique:posts|max:255',
+            'title' => 'required|max:255',
             'content' => 'required',
         ]);
 
@@ -135,7 +138,7 @@ class PostController extends Controller
         $post->content = $request->get('content');
         $post->uploadedBy = $request->get('author');
         $post->save();
-        return redirect('/posts')->with('success', 'Data post telah diubah');    
+        return redirect('blog/admin')->with('success', 'Data post telah diubah');    
     }
 
     /**
@@ -149,6 +152,6 @@ class PostController extends Controller
         //
         $post = \App\Post::find($id);
         $post->delete();
-        return redirect('/posts')->with('success','Data post telah di hapus');
+        return redirect('blog/admin')->with('success','Data post telah di hapus');
     }
 }

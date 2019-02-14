@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{asset('css/blog/blog.css')}}">
     <link rel="stylesheet" href="{{asset('css/blog/footer.css')}}">
     <link rel="stylesheet" href="{{asset('css/blog/navigation.css')}}">
-    <title>Blog Home</title>
+    <title>Document</title>
 </head>
 
 <body>
@@ -39,7 +39,6 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('blog/admin') }}">Dashboard</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
@@ -50,7 +49,6 @@
                                 </form>
                             </div>
                         </li>
-
                         @endguest
                     </ul>
                 </div>
@@ -60,6 +58,10 @@
     <div data-bs-parallax-bg="true" style="height:500px;background-image:url(&quot;http://mrandika.ga/img/poster.jpg&quot;);background-position:center;background-size:cover;"></div>
     <div class="mb-5 mt-5">
         <div class="container">
+
+            <h1><a href="{{url('blog')}}" class="btn btn-primary"><i class="fas fa-arrow-left"></i></a> Menampilkan
+                Post Untuk Kategori {{$filteredPosts[0]->categoriesId}}</h1>
+
             <div class="row">
                 <div class="col-md-8 mt-3">
                     @if (\App\User::count() == 0)
@@ -69,7 +71,7 @@
                         <p>Believe in something great.</p>
                     </div>
                     @else
-                    @foreach ($posts->sortByDesc('created_at') as $post)
+                    @foreach ($filteredPosts as $post)
                     <div class="card mb-3">
                         <div class="card-body">
                             <h4 class="card-title"><a href="{{ action('PostController@show', $post->id)}} ">{{$post->title}}</a></h4>
@@ -88,21 +90,10 @@
                             <h6 class="text-muted card-subtitle mb-2">Don't Miss These Post!</h6>
                         </div>
                         <ul>
-                            @foreach ($posts->sortByDesc('created_at') as $post)
+                            @foreach ($filteredPosts as $post)
                             <li><a href="{{ action('PostController@show', $post->id)}}">{{$post->title}}</a></li>
                             @endforeach
                         </ul>
-                    </div>
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            <h4 class="card-title">Categories</h4>
-                            <h6 class="text-muted card-subtitle mb-2">Who Like Messed Up Post ?</h6>
-                            <ul>
-                                @foreach ($categories as $categorie)
-                                <li><a href="{{url('blog/filter', $categorie->id)}}">{{$categorie->categorie}}</a></li>
-                                @endforeach
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     <title>Admin Dashboard</title>
 </head>
-@if (Auth::check())
 
 <body>
 
@@ -58,8 +57,15 @@
                         <span>Configuration</span></a>
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-sign-out-alt"></i>
-                        <span>Logout</span></a>
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt"></i>
+                        {{ __('Logout') }}
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -73,63 +79,58 @@
                         <button type="button" id="sidebarCollapse" class="btn btn-info">
                             <i class="fas fa-align-left"></i>
                         </button>
-                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <svg class="svg-inline--fa fa-align-justify fa-w-14" aria-hidden="true" data-prefix="fas"
-                                data-icon="align-justify" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-                                data-fa-i2svg="">
-                                <path fill="currentColor" d="M0 84V44c0-8.837 7.163-16 16-16h416c8.837 0 16 7.163 16 16v40c0 8.837-7.163 16-16 16H16c-8.837 0-16-7.163-16-16zm16 144h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 256h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0-128h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path>
-                            </svg><!-- <i class="fas fa-align-justify"></i> -->
-                        </button>
-                        <a href="{{url('posts')}}" class="btn btn-primary"><i class="fas fa-arrow-left"></i></a>
+                        <a href="{{url('blog/admin')}}" class="btn btn-primary"><i class="fas fa-arrow-left"></i></a>
                     </div>
                 </nav>
 
                 <div class="container">
 
-                        @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                    @if ($errors->any())
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading">Uh Oh, Something wrong...</h4>
+                        <p>Aww, there's error present while adding your post. Check Again the error message.</p>
+                        <hr>
+
+                        <ol>
+                            @foreach ($errors->all() as $error)
+                            <li>
+                                <p class="mb-0">{{ $error }}</p>
+                            </li>
+                            @endforeach
+                        </ol>
+
+                    </div>
+
                     @endif
 
-                    <h1>Edit a Post.</h1>
-                    <form method="POST" action="{{action('PostController@update', $id)}}">
+                    <h1>Add a Post.</h1>
+                    <form method="POST" action="{{url('blog/admin')}}" enctype="multipart/form-data">
                         @csrf
-                        <input name="_method" type="hidden" value="PATCH">
-                        @if ($post->featuredImage != null)
-                        <img class="p-3" src="{{url('uploads/'.$post->featuredImage)}}" alt="" style="width: 25%">
-                        @endif
-                        @if ($post->hasFeatured == null)
+                        <p class="text-warning"><span class="fas fa-exclamation-triangle mr-1"></span>You Cannot Edit
+                            the Featured Images Later.</p>
                         <div class="form-group">
-                            <input id="didIHaveFeaturedImage" name="didIHavefeaturedImage" type="checkbox" 
-                            <label> Add Featured Image</label>
+                            <input id="didIHaveFeaturedImage" name="didIHavefeaturedImage" type="checkbox">
+                            <label> I Have Featured Image</label>
                             <input id="featuredImage" type="file" class="form-control-file" name="featuredImage" style="display: none">
                         </div>
-                        @else
-                        <p class="text-danger"><span class="fas fa-exclamation-triangle mr-1"></span>You Cannot Edit the Featured Images.</p>
-                        @endif
                         <div class="form-group">
                             <label>Your Post Title</label>
-                            <input type="text" class="form-control" name="title" placeholder="Title" value="{{ $post->title }}">
+                            <input type="text" class="form-control" name="title" placeholder="Title" required>
                         </div>
                         <div class="form-group">
                             <label>Your Post Content</label>
-                            <textarea class="form-control" name="content" rows="3">{{ $post->content }}</textarea>
+                            <textarea class="form-control" name="content" rows="3" required></textarea>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlSelect1">Post Category</label>
                             <select class="form-control" name="categories">
-                                <option value="1" @if($post->categories==1) selected @endif>Teknologi</option>
+                                @foreach ($categories as $categorie)
+                                <option value="{{$categorie->id}}">{{$categorie->categorie}}</option>
+                                @endforeach
                             </select>
                         </div>
-                    <input type="text" value="{{ $post->uploadedBy }}" name="author" hidden>
-                        <button type="submit" class="btn btn-primary p-2">Edit</button>
+                        <input type="text" value="{{ Auth::user()->name }}" name="author" hidden>
+                        <button type="submit" class="btn btn-primary p-2">Submit</button>
                     </form>
                 </div>
 
@@ -165,10 +166,8 @@
                         });
 
                     });
+
                 </script>
 </body>
-@else
-
-@endif
 
 </html>

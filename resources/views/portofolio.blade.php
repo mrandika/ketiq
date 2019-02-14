@@ -9,7 +9,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+        crossorigin="anonymous">
 
     <style>
         .bg-1 { 
@@ -145,7 +146,8 @@
                         <h3>Sekolah Menengah Pertama - Bojonggede 02</h3>
                         <p>200x - 200x</p>
                         <p>Saya masuk SMP tahun 2016-an. Di SMP saya dibilang paling pinter pelajaran Bahasa ama TIK.
-                            Belum berubah juga, saya paling males sama pelajaran MTK. Di SMP, saya alhamdulillah lumayan
+                            Belum berubah juga, saya paling males sama pelajaran MTK. Di SMP, saya alhamdulillah
+                            lumayan
                             berkembang daripada di SD, bobrok :(</p>
                     </div>
                 </div>

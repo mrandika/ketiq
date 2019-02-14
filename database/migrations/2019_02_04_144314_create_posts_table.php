@@ -19,7 +19,8 @@ class CreatePostsTable extends Migration
             $table->string('featuredImage')->nullable();
             $table->string('mime')->nullable();
             $table->string('original_filename')->nullable();
-            $table->integer('categoriesId');
+            $table->unsignedInteger('categoriesId');
+            $table->foreign('categoriesId')->references('id')->on('categories');
             $table->string('title');
             $table->text('content');
             $table->string('uploadedBy');

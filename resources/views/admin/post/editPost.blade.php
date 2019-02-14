@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     <title>Admin Dashboard</title>
 </head>
+@if (Auth::check())
 
 <body>
 
@@ -57,8 +58,15 @@
                         <span>Configuration</span></a>
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-sign-out-alt"></i>
-                        <span>Logout</span></a>
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt"></i>
+                        {{ __('Logout') }}
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -72,56 +80,58 @@
                         <button type="button" id="sidebarCollapse" class="btn btn-info">
                             <i class="fas fa-align-left"></i>
                         </button>
-                        <a href="{{url('posts')}}" class="btn btn-primary"><i class="fas fa-arrow-left"></i></a>
+                        <a href="{{url('blog/admin')}}" class="btn btn-primary"><i class="fas fa-arrow-left"></i></a>
                     </div>
                 </nav>
 
                 <div class="container">
 
                     @if ($errors->any())
-                    <div class="alert alert-danger" role="alert">
-                        <h4 class="alert-heading">Uh Oh, Something wrong...</h4>
-                        <p>Aww, there's error present while adding your post. Check Again the error message.</p>
-                        <hr>
-
-                        <ol>
+                    <div class="alert alert-danger">
+                        <ul>
                             @foreach ($errors->all() as $error)
-                            <li>
-                                <p class="mb-0">{{ $error }}</p>
-                            </li>
+                            <li>{{ $error }}</li>
                             @endforeach
-                        </ol>
-
+                        </ul>
                     </div>
-
                     @endif
 
-                    <h1>Add a Post.</h1>
-                    <form method="POST" action="{{url('posts')}}" enctype="multipart/form-data">
+                    <h1>Edit a Post.</h1>
+                    <form method="POST" action="{{action('PostController@update', $id)}}">
                         @csrf
-                        <p class="text-warning"><span class="fas fa-exclamation-triangle mr-1"></span>You Cannot Edit
-                            the Featured Images Later.</p>
+                        <input name="_method" type="hidden" value="PATCH">
+                        @if ($post->featuredImage != null)
+                        <img class="p-3" src="{{url('uploads/'.$post->featuredImage)}}" alt="" style="width: 25%">
+                        @endif
+                        @if ($post->hasFeatured == null)
                         <div class="form-group">
-                            <input id="didIHaveFeaturedImage" name="didIHavefeaturedImage" type="checkbox">
-                            <label> I Have Featured Image</label>
+                            <input id="didIHaveFeaturedImage" name="didIHavefeaturedImage" type="checkbox" <label> Add
+                            Featured Image</label>
                             <input id="featuredImage" type="file" class="form-control-file" name="featuredImage" style="display: none">
                         </div>
+                        @else
+                        <p class="text-danger"><span class="fas fa-exclamation-triangle mr-1"></span>You Cannot Edit
+                            the Featured Images.</p>
+                        @endif
                         <div class="form-group">
                             <label>Your Post Title</label>
-                            <input type="text" class="form-control" name="title" placeholder="Title" required>
+                            <input type="text" class="form-control" name="title" placeholder="Title" value="{{ $post->title }}">
                         </div>
                         <div class="form-group">
                             <label>Your Post Content</label>
-                            <textarea class="form-control" name="content" rows="3" required></textarea>
+                            <textarea class="form-control" name="content" rows="3">{{ $post->content }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlSelect1">Post Category</label>
                             <select class="form-control" name="categories">
-                                <option value="1">Teknologi</option>
+                                @foreach ($categories as $categorie)
+                                <option value="{{$categorie->id}}" @if($post->categoriesId==$categorie->id) selected
+                                    @endif>{{$categorie->categorie}}</option>
+                                @endforeach
                             </select>
                         </div>
-                        <input type="text" value="{{ Auth::user()->name }}" name="author" hidden>
-                        <button type="submit" class="btn btn-primary p-2">Submit</button>
+                        <input type="text" value="{{ $post->uploadedBy }}" name="author" hidden>
+                        <button type="submit" class="btn btn-primary p-2">Edit</button>
                     </form>
                 </div>
 
@@ -157,7 +167,11 @@
                         });
 
                     });
+
                 </script>
 </body>
+@else
+
+@endif
 
 </html>

@@ -25,11 +25,19 @@ Route::get('portofolio', function () {
 
 Route::get('blog', function () {
     $posts = DB::table('posts')->get();
-    return view('blog', ['posts' => $posts]);
+    $categories = DB::table('categories')->get();
+    return view('blog', ['posts' => $posts], ['categories' => $categories]);
+});
+
+Route::get('blog/filter/{id}', function($id) {
+    $filteredPosts = DB::table('posts')->where('categoriesId', $id)->get();
+    $posts = DB::table('posts')->get();
+    return view('filteredBlog', ['filteredPosts' => $filteredPosts], ['posts' => $posts]);
 });
 
 Auth::routes();
 
-Route::resource('posts', 'PostController');
+Route::resource('blog/admin', 'PostController');
+Route::resource('blog/admin/categories', 'CategorieController');
 
 Route::get('/home', 'HomeController@index')->name('home');

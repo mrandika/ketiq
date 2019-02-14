@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{asset('css/admin.css')}}">
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-    <title>Blog</title>
+    <title>Admin Dashboard</title>
 </head>
 @if (Auth::check())
 
@@ -39,26 +39,17 @@
                 <li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
                             class="fas fa-columns"></i>
-                        <span>Posts</span>
+                        <span>Pages</span>
                     </a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="{{url('posts/create')}}">
-                                <i class="fas fa-plus"></i>
-                                <span>Create New Post</span>
-                            </a>
+                            <a href="#">Page 1</a>
                         </li>
                         <li>
-                            <a href="#">
-                                <i class="fas fa-database"></i>
-                                <span>All Post</span>
-                            </a>
+                            <a href="#">Page 2</a>
                         </li>
                         <li>
-                            <a href="#">
-                                <i class="fas fa-tasks"></i>
-                                <span>Manage Post</span>
-                            </a>
+                            <a href="#">Page 3</a>
                         </li>
                     </ul>
                 </li>
@@ -75,6 +66,7 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -88,74 +80,56 @@
                         <button type="button" id="sidebarCollapse" class="btn btn-info">
                             <i class="fas fa-align-left"></i>
                         </button>
-
-                        <a href="{{url('posts/create')}}" class="btn btn-primary">Add New <i class="fas fa-plus"></i></a>
+                        <a href="{{url('blog/admin')}}" class="btn btn-primary"><i class="fas fa-arrow-left"></i></a>
                     </div>
                 </nav>
-                @if (\Session::has('success'))
-                <div class="alert alert-success mt-2 mb-2">
-                    <p>{{ \Session::get('success') }}</p>
-                </div>
-                @endif
 
-                <div class="container mt-4">
-                    <div class="card-deck text-center">
-                        <div class="card border-secondary mb-3" style="max-width: 18rem;">
-                            <div class="card-header">Your Posts</div>
-                            <div class="card-body text-secondary">
-                                <h1 class="card-title">{{\App\Post::count()}}</h1>
-                                <p class="card-text">Published.</p>
-                            </div>
-                        </div>
-                        <div class="card border-secondary mb-3" style="max-width: 18rem;">
-                            <div class="card-header">Your Contributors</div>
-                            <div class="card-body text-secondary">
-                                <h1 class="card-title">{{\App\User::count()}}</h1>
-                                <p class="card-text">User.</p>
-                            </div>
-                        </div>
-                        <div class="card border-secondary mb-3" style="max-width: 18rem;">
-                            <div class="card-header">All Comments</div>
-                            <div class="card-body text-secondary">
-                                <h1 class="card-title">0</h1>
-                                <p class="card-text">Commented.</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="container">
 
-                    <h1>Your Posts.</h1>
-                    <p>Click on the Title to Preview the Posts.</p>
-                    <table class="table table-striped mt-4">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Title</th>
-                                <th>Created By</th>
-                                <th colspan="2">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @foreach($posts->sortByDesc('created_at') as $post)
-                            <tr>
-                                <td>{{$post['id']}}</td>
-                                <td>
-                                    <a href="{{action('PostController@show', $post['id'])}}">{{$post['title']}}</a>
-                                </td>
-                                <td>{{$post['uploadedBy']}}, at {{ $post['created_at'] }}</td>
-
-                                <td><a href="{{action('PostController@edit', $post['id'])}}" class="btn btn-warning">Edit</a></td>
-                                <td>
-                                    <form action="{{action('PostController@destroy', $post['id'])}}" method="post">
-                                        @csrf
-                                        <input name="_method" type="hidden" value="DELETE">
-                                        <button class="btn btn-danger" type="submit">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
                             @endforeach
-                        </tbody>
-                    </table>
+                        </ul>
+                    </div>
+                    @endif
+
+                    <h1>Edit a Post.</h1>
+                    <form method="POST" action="{{action('PostController@update', $id)}}">
+                        @csrf
+                        <input name="_method" type="hidden" value="PATCH">
+                        @if ($post->featuredImage != null)
+                        <img class="p-3" src="{{url('uploads/'.$post->featuredImage)}}" alt="" style="width: 25%">
+                        @endif
+                        @if ($post->hasFeatured == null)
+                        <div class="form-group">
+                            <input id="didIHaveFeaturedImage" name="didIHavefeaturedImage" type="checkbox" <label> Add
+                            Featured Image</label>
+                            <input id="featuredImage" type="file" class="form-control-file" name="featuredImage" style="display: none">
+                        </div>
+                        @else
+                        <p class="text-danger"><span class="fas fa-exclamation-triangle mr-1"></span>You Cannot Edit
+                            the Featured Images.</p>
+                        @endif
+                        <div class="form-group">
+                            <label>Your Post Title</label>
+                            <input type="text" class="form-control" name="title" placeholder="Title" value="{{ $post->title }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Your Post Content</label>
+                            <textarea class="form-control" name="content" rows="3">{{ $post->content }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Post Category</label>
+                            <select class="form-control" name="categories">
+                                <option value="1" @if($post->categories==1) selected @endif>Teknologi</option>
+                            </select>
+                        </div>
+                        <input type="text" value="{{ $post->uploadedBy }}" name="author" hidden>
+                        <button type="submit" class="btn btn-primary p-2">Edit</button>
+                    </form>
                 </div>
 
                 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -169,6 +143,20 @@
                 <script>
                     $(document).ready(function () {
 
+                        function toggleFields(boxId, checkboxId) {
+                            var checkbox = document.getElementById(checkboxId);
+                            var box = document.getElementById(boxId);
+                            checkbox.onclick = function () {
+                                console.log(this);
+                                if (this.checked) {
+                                    box.style['display'] = 'block';
+                                } else {
+                                    box.style['display'] = 'none';
+                                }
+                            };
+                        }
+                        toggleFields('featuredImage', 'didIHaveFeaturedImage');
+
                         $('#sidebarCollapse').on('click', function () {
                             $('#sidebar').toggleClass('active');
                             $('.collapse.in').toggleClass('in');
@@ -176,8 +164,11 @@
                         });
 
                     });
+
                 </script>
 </body>
+@else
+
 @endif
 
 </html>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{asset('css/blog/navigation.css')}}">
     <link rel="stylesheet" href="{{asset('css/blog/blog.css')}}">
-    <title>Document</title>
+    <title>{{$post->title}}</title>
 </head>
 
 <body>
@@ -27,9 +27,9 @@
                         <img class="mb-5" src="{{url('uploads/'.$post->featuredImage)}}" alt="" style="width: 50%">
                         @endif
                         <h1>{{$post->title}}</h1>
-                        <p><span class="by">by</span> <a href="#">{{$post->uploadedBy}}</a> | <span
-                                class="date">on {{$post->created_at}} </span></p>
-                        <p>Posted under <a href="#">{{$post->categoriesId}}</a></p>
+                        <p><span class="by">by</span> <a href="#">{{$post->uploadedBy}}</a> | <span class="date">on
+                                {{$post->created_at}} </span></p>
+                        <p>Posted under <a href="{{url('blog/filter', $post->categoriesId)}}">{{$post->categoriesId}}</a></p>
                     </div>
                     <div class="text">
                         <p style="text-align:justify">{{$post->content}}</p>
