@@ -39,5 +39,6 @@ Auth::routes();
 
 Route::resource('blog/admin', 'PostController');
 Route::resource('blog/admin/categories', 'CategorieController');
+Route::resource('blog/admin/membership', 'MembershipController');
 
 Route::get('/home', 'HomeController@index')->name('home');

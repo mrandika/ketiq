@@ -23,7 +23,8 @@ class PostController extends Controller
         //
         $posts=\App\Post::all();
         $categories=\App\Categorie::all();
-        return view('admin/admin',compact('posts', 'categories'));  
+        $users=\App\User::all();
+        return view('admin/admin',compact('posts', 'categories', 'users'));  
     }
 
     /**
@@ -101,8 +102,8 @@ class PostController extends Controller
     {
         //
         $post = \App\Post::find($id);
-        $categories =\App\Categorie::all();
-        return view('admin/post/editPost',compact('post','id', 'categories'));  
+        $user = \App\User::find($id);
+        return view('admin/post/editPost',compact('post', 'user'));  
     }
 
     /**

@@ -68,6 +68,9 @@
                                 </button>
                             </div>
                         </div>
+
+                        <input type="hidden" value="1" name="membership" required="required">
+
                     </form>
                 </div>
             </div>

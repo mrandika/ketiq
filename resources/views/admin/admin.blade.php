@@ -122,6 +122,43 @@
                     </div>
 
                     <div class="container">
+                        <h1>Your Posts.</h1>
+                        <p>Click on the Title to Preview the Posts.</p>
+                        <a href="{{action('PostController@create')}}" class="btn btn-primary">Add New <i class="fas fa-plus"></i></a>
+                        <div class="table-responsive">
+                            <table class="table table-striped mt-4 mb-5">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Title</th>
+                                        <th>Created By</th>
+                                        <th colspan="2">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach($posts->sortByDesc('created_at') as $post)
+                                    <tr>
+                                        <td>{{$post['id']}}</td>
+                                        <td>
+                                            <a href="{{action('PostController@show', $post['id'])}}">{{$post['title']}}</a>
+                                        </td>
+                                        <td>{{$post['uploadedBy']}}, at {{ $post['created_at'] }}</td>
+
+                                        <td><a href="{{action('PostController@edit', $post['id'])}}" class="btn btn-warning">Edit</a></td>
+                                        <td>
+                                            <form action="{{action('PostController@destroy', $post['id'])}}" method="post">
+                                                @csrf
+                                                <input name="_method" type="hidden" value="DELETE">
+                                                <button class="btn btn-danger" type="submit">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
                         <h1>Your Categories.</h1>
                         <a href="{{action('CategorieController@create')}}" class="btn btn-primary">Add New <i class="fas fa-plus"></i></a>
                         <div class="table-responsive">
@@ -156,37 +193,41 @@
                                 </tbody>
                             </table>
                         </div>
-                        <h1>Your Posts.</h1>
-                        <p>Click on the Title to Preview the Posts.</p>
-                        <a href="{{action('PostController@create')}}" class="btn btn-primary">Add New <i class="fas fa-plus"></i></a>
+
+                        <h1>Our Contributors.</h1>
+                        @if (Auth::user()->email == 'admin@blog.com')
+                        <a href="{{action('MembershipController@create')}}" class="btn btn-primary">Add New <i class="fas fa-plus"></i></a>
+                        @endif
                         <div class="table-responsive">
-                            <table class="table table-striped mt-4">
+                            <table class="table table-striped mt-4 mb-5">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Title</th>
-                                        <th>Created By</th>
+                                        <th>Name</th>
+                                        <th>Membership</th>
+                                        @if (Auth::user()->email == 'admin@blog.com')
                                         <th colspan="2">Action</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    @foreach($posts->sortByDesc('created_at') as $post)
+                                    @foreach($users->sortByDesc('created_at') as $user)
                                     <tr>
-                                        <td>{{$post['id']}}</td>
+                                        <td>{{$user['id']}}</td>
+                                        <td>{{$user['name']}}</td>
+                                        <td>{{$user['membership']}}</td>
+                                        @if (Auth::user()->email == 'admin@blog.com')
+                                        <td><a href="{{action('MembershipController@edit', $user['id'])}}" class="btn btn-warning">Edit</a></td>
                                         <td>
-                                            <a href="{{action('PostController@show', $post['id'])}}">{{$post['title']}}</a>
-                                        </td>
-                                        <td>{{$post['uploadedBy']}}, at {{ $post['created_at'] }}</td>
-
-                                        <td><a href="{{action('PostController@edit', $post['id'])}}" class="btn btn-warning">Edit</a></td>
-                                        <td>
-                                            <form action="{{action('PostController@destroy', $post['id'])}}" method="post">
+                                            <form action="{{action('MembershipController@destroy', $user['id'])}}"
+                                                method="post">
                                                 @csrf
                                                 <input name="_method" type="hidden" value="DELETE">
                                                 <button class="btn btn-danger" type="submit">Delete</button>
                                             </form>
                                         </td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -214,7 +255,6 @@
                     });
 
                 });
-
             </script>
 </body>
 
