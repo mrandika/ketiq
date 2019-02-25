@@ -60,7 +60,7 @@
         <div class="container">
 
             <h1><a href="{{url('blog')}}" class="btn btn-primary"><i class="fas fa-arrow-left"></i></a> Menampilkan
-                Post Untuk Kategori {{$filteredPosts[0]->categoriesId}}</h1>
+                Post Untuk Kategori {{\App\Categorie::select('categorie')->where('id', $filteredPosts[0]->categoriesId)->first()->categorie}}</h1>
 
             <div class="row">
                 <div class="col-md-8 mt-3">

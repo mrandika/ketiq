@@ -38,6 +38,7 @@ Route::get('blog/filter/{id}', function($id) {
 Auth::routes();
 
 Route::resource('blog/admin', 'PostController');
+Route::resource('blog/admin/comment', 'CommentController');
 Route::resource('blog/admin/categories', 'CategorieController');
 Route::resource('blog/admin/membership', 'MembershipController');
 

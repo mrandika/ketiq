@@ -97,7 +97,7 @@
                     @endif
 
                     <h1>Edit a Post.</h1>
-                    <form method="POST" action="{{action('PostController@update', $id)}}">
+                    <form method="POST" action="{{action('PostController@update', $post->id)}}">
                         @csrf
                         <input name="_method" type="hidden" value="PATCH">
                         @if ($post->featuredImage != null)

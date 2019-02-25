@@ -89,7 +89,8 @@ class PostController extends Controller
     {
         //
         $post = \App\Post::find($id);
-        return view('show',compact('post','id'));
+        $comments = \App\Comment::all()->where('onPost', $id);
+        return view('show',compact('post','comments'));
     }
 
     /**
@@ -103,7 +104,8 @@ class PostController extends Controller
         //
         $post = \App\Post::find($id);
         $user = \App\User::find($id);
-        return view('admin/post/editPost',compact('post', 'user'));  
+        $categories = \App\Categorie::all();
+        return view('admin/post/editPost',compact('post', 'user', 'categories'));  
     }
 
     /**

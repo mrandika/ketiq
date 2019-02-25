@@ -18,6 +18,22 @@ class CreateMembershipsTable extends Migration
             $table->string('member');
             $table->timestamps();
         });
+
+        DB::table('memberships')->insert(
+            array(
+                'member' => 'FREE'
+            )
+        );
+        DB::table('memberships')->insert(
+            array(
+                'member' => 'PREMIUM'
+            )
+        );
+        DB::table('memberships')->insert(
+            array(
+                'member' => 'PLATINUM'
+            )
+        );
     }
 
     /**

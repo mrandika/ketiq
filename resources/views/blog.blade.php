@@ -62,7 +62,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 mt-3">
-                    @if (\App\User::count() == 0)
+                    @if (\App\Post::count() == 0)
                     <div class="jumbotron">
                         <h1 class="display-5">Hello, world!</h1>
                         <p class="lead">Whoops... There's no posts yet. Come back later ?</p>
@@ -74,7 +74,7 @@
                         <div class="card-body">
                             <h4 class="card-title"><a href="{{ action('PostController@show', $post->id)}} ">{{$post->title}}</a></h4>
                             <h6 class="text-muted card-subtitle mb-2 mt-2">Oleh {{ $post->uploadedBy }}, pada
-                                {{$post->created_at}}.</h6>
+                                {{\Carbon\Carbon::parse($post->created_at)->format('l, d F Y H:i')}}.</h6>
                             <p class="card-text">{{$post->content}}</p>
                         </div>
                     </div>
