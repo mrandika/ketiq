@@ -19,6 +19,8 @@ class MembershipController extends Controller
     public function index()
     {
         //
+        $users = \App\User::all();
+        return view('v2/blog/admin/membership/membership', compact('users'));
     }
 
     /**
@@ -30,7 +32,7 @@ class MembershipController extends Controller
     {
         //
         $memberships = \App\Membership::all();
-        return view('admin/user/createUser', compact('memberships'));
+        return view('v2/blog/admin/membership/create', compact('memberships'));
     }
 
     /**
@@ -46,7 +48,7 @@ class MembershipController extends Controller
             'name' => 'required|max:255',
             'membership' => 'required',
             'email' => 'required|unique:users',
-            'oldPassword' => 'required',
+            'password' => 'required|confirmed',
         ]);
 
         $user = new \App\User;
@@ -57,7 +59,7 @@ class MembershipController extends Controller
         $user->password = $password;
         $user->save();
 
-        return redirect('blog/admin')->with('success', 'Data user telah ditambahkan'); 
+        return redirect('blog/admin/panel/membership')->with('success', 'Data user telah ditambahkan'); 
     }
 
     /**
@@ -82,7 +84,7 @@ class MembershipController extends Controller
         //
         $user = \App\User::find($id);
         $memberships = \App\Membership::all();
-        return view('admin/user/editUser',compact('user', 'memberships'));  
+        return view('v2/blog/admin/membership/edit',compact('user', 'memberships'));  
     }
 
     /**
@@ -99,7 +101,7 @@ class MembershipController extends Controller
             'name' => 'required|max:255',
             'membership' => 'required',
             'email' => 'required',
-            'oldPassword' => 'required',
+            'oldpassword' => 'required',
         ]);
 
         $user = \App\User::find($id);
@@ -107,14 +109,18 @@ class MembershipController extends Controller
         $user->membership = $request->get('membership');
         $user->email = $request->get('email');
 
-        if ($request->get('didIChangeMyPassword') == "1") {
-            $user->password = $request->get('password');
+        if ($request->get('password') != null) {
+            if ($request->get('confirmpassword') == $request->get('password')) {
+                $password = Hash::make($request->get('password'));
+                $user->password = $password;
+            } else {
+                return redirect('blog/admin/panel/membership')->with('error', 'Password Confirmation doesnt match.');
+            }
         }
 
-        $user->password = $request->get('oldPassword');
         $user->save();
 
-        return redirect('blog/admin')->with('success', 'Data user telah diubah'); 
+        return redirect('blog/admin/panel/membership')->with('success', 'Data user telah diubah'); 
 
     }
 
@@ -129,6 +135,6 @@ class MembershipController extends Controller
         //
         $user = \App\User::find($id);
         $user->delete();
-        return redirect('blog/admin')->with('success','Data user telah di hapus');
+        return redirect('blog/admin/panel/membership')->with('success','Data user telah di hapus');
     }
 }

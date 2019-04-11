@@ -23,8 +23,7 @@ class PostController extends Controller
         //
         $posts=\App\Post::all();
         $categories=\App\Categorie::all();
-        $users=\App\User::all();
-        return view('admin/admin',compact('posts', 'categories', 'users'));  
+        return view('v2/blog/admin/post/post',compact('posts', 'categories'));  
     }
 
     /**
@@ -36,7 +35,7 @@ class PostController extends Controller
     {
         //
         $categories=\App\Categorie::all();
-        return view('admin/post/createPost', compact('categories'));
+        return view('v2/blog/admin/post/create', compact('categories'));
     }
 
     /**
@@ -70,6 +69,7 @@ class PostController extends Controller
             $post->featuredImage = $cover->getFilename().'.'.$extension;
         }
 
+        $post->tags = $request->get('tags');
         $post->categoriesId = $request->get('categories');
         $post->title = $request->get('title');
         $post->content = $request->get('content');
@@ -89,8 +89,9 @@ class PostController extends Controller
     {
         //
         $post = \App\Post::find($id);
+        $posts = \App\Post::all();
         $comments = \App\Comment::all()->where('onPost', $id);
-        return view('show',compact('post','comments'));
+        return view('show',compact('post','posts','comments'));
     }
 
     /**
@@ -105,7 +106,7 @@ class PostController extends Controller
         $post = \App\Post::find($id);
         $user = \App\User::find($id);
         $categories = \App\Categorie::all();
-        return view('admin/post/editPost',compact('post', 'user', 'categories'));  
+        return view('v2/blog/admin/post/edit',compact('post', 'user', 'categories'));  
     }
 
     /**
@@ -137,6 +138,7 @@ class PostController extends Controller
         }
 
         $post->categoriesId = $request->get('categories');
+        $post->tags = $request->get('tags');
         $post->title = $request->get('title');
         $post->content = $request->get('content');
         $post->uploadedBy = $request->get('author');

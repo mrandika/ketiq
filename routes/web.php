@@ -27,7 +27,7 @@ Route::get('blog', function () {
     $posts = DB::table('posts')->get();
     $categories = DB::table('categories')->get();
     return view('blog', ['posts' => $posts], ['categories' => $categories]);
-});
+})->name('blog.home');
 
 Route::get('blog/filter/{id}', function($id) {
     $filteredPosts = DB::table('posts')->where('categoriesId', $id)->get();
@@ -38,8 +38,8 @@ Route::get('blog/filter/{id}', function($id) {
 Auth::routes();
 
 Route::resource('blog/admin', 'PostController');
-Route::resource('blog/admin/comment', 'CommentController');
-Route::resource('blog/admin/categories', 'CategorieController');
-Route::resource('blog/admin/membership', 'MembershipController');
+Route::resource('blog/admin/panel/categories', 'CategorieController');
+Route::resource('blog/admin/panel/comment', 'CommentController');
+Route::resource('blog/admin/panel/membership', 'MembershipController');
 
 Route::get('/home', 'HomeController@index')->name('home');

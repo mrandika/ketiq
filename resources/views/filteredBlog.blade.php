@@ -57,81 +57,52 @@
     </div>
     <div data-bs-parallax-bg="true" style="height:500px;background-image:url(&quot;http://mrandika.ga/img/poster.jpg&quot;);background-position:center;background-size:cover;"></div>
     <div class="mb-5 mt-5">
-        <div class="container">
-
-            <h1><a href="{{url('blog')}}" class="btn btn-primary"><i class="fas fa-arrow-left"></i></a> Menampilkan
-                Post Untuk Kategori {{\App\Categorie::select('categorie')->where('id', $filteredPosts[0]->categoriesId)->first()->categorie}}</h1>
-
-            <div class="row">
-                <div class="col-md-8 mt-3">
-                    @if (\App\User::count() == 0)
-                    <div class="jumbotron">
-                        <h1 class="display-5">Hello, world!</h1>
-                        <p class="lead">Whoops... There's no posts yet. Come back later ?</p>
-                        <p>Believe in something great.</p>
-                    </div>
-                    @else
-                    @foreach ($filteredPosts as $post)
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h4 class="card-title"><a href="{{ action('PostController@show', $post->id)}} ">{{$post->title}}</a></h4>
-                            <h6 class="text-muted card-subtitle mb-2 mt-2">Oleh {{ $post->uploadedBy }}, pada
-                                {{$post->created_at}}.</h6>
-                            <p class="card-text">{{$post->content}}</p>
-                        </div>
-                    </div>
-                    @endforeach
-                    @endif
-                </div>
-                <div class="col-md-4">
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            <h4 class="card-title">Recent Post</h4>
-                            <h6 class="text-muted card-subtitle mb-2">Don't Miss These Post!</h6>
-                        </div>
-                        <ul>
+            <div class="container">
+                    <h1><a href="{{url('blog')}}" class="btn btn-primary"><i class="fas fa-arrow-left"></i></a> Menampilkan
+                        Post Untuk Kategori {{\App\Categorie::select('categorie')->where('id', $filteredPosts[0]->categoriesId)->first()->categorie}}</h1>
+                    <div class="row">
+                        <div class="col-md-8 mt-3">
+                            @if (\App\User::count() == 0)
+                            <div class="jumbotron">
+                                <h1 class="display-5">Hello, world!</h1>
+                                <p class="lead">Whoops... There's no posts yet. Come back later ?</p>
+                                <p>Believe in something great.</p>
+                            </div>
+                            @else
                             @foreach ($filteredPosts as $post)
-                            <li><a href="{{ action('PostController@show', $post->id)}}">{{$post->title}}</a></li>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h4 class="card-title"><a href="{{ action('PostController@show', $post->id)}} ">{{$post->title}}</a></h4>
+                                    <h6 class="text-muted card-subtitle mb-2 mt-2">Oleh {{ $post->uploadedBy }}, pada
+                                        {{$post->created_at}}.</h6>
+                                        {!!$post->content!!}
+                                </div>
+                            </div>
                             @endforeach
-                        </ul>
+                            @endif
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <h4 class="card-title">Recent Post</h4>
+                                    <h6 class="text-muted card-subtitle mb-2">Don't Miss These Post!</h6>
+                                </div>
+                                <ul>
+                                    @foreach ($filteredPosts as $post)
+                                    <li><a href="{{ action('PostController@show', $post->id)}}">{{$post->title}}</a></li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
     </div>
     <div class="footer-clean">
         <footer>
-            <div class="container">
+            <div class="container text-center">
+                <p>Powered by <b>Ketiq</b></p>
                 <div class="row justify-content-center">
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Services</h3>
-                        <ul>
-                            <li><a href="#">Web design</a></li>
-                            <li><a href="#">Development</a></li>
-                            <li><a href="#">Hosting</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>About</h3>
-                        <ul>
-                            <li><a href="#">Company</a></li>
-                            <li><a href="#">Team</a></li>
-                            <li><a href="#">Legacy</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Careers</h3>
-                        <ul>
-                            <li><a href="#">Job openings</a></li>
-                            <li><a href="#">Employee success</a></li>
-                            <li><a href="#">Benefits</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i
-                                class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a
-                            href="#"><i class="icon ion-social-instagram"></i></a>
-                        <p class="copyright">Company Name © 2017</p>
-                    </div>
+                    <p class="copyright">Andika © 2019</p>
                 </div>
             </div>
         </footer>

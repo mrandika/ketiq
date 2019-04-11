@@ -46,9 +46,9 @@ class CommentController extends Controller
             'comment' => 'required',
         ]);
         $comment = new Comment;
-        $comment->onPost = $request->get('onPost');
-        $comment->fromUser = $request->get('fromUser');
-        $comment->comment = $request->get('comment');
+        $comment->onPost = $request->post('onPost');
+        $comment->fromUser = $request->post('fromUser');
+        $comment->comment = $request->post('comment');
 
         $comment->save();
         return redirect($request->server('HTTP_REFERER'));
@@ -87,7 +87,7 @@ class CommentController extends Controller
     {
         //
         $validatedData = $request->validate([
-            'comment' => 'required',
+            'editComment' => 'required',
         ]);
 
         $comment = Comment::find($id);

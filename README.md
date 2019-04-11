@@ -25,6 +25,13 @@ Keempat :
 
 Kelima :
 - Mengimplementasi fitur komentar pada post
+- Membuat fitur upload gambar
+
+Keenam :
+- Menambahkan komponen blog regular pada blog ini
+- Menambahkan panel admin
+- Menambahkan share button
+- Memperbaiki tampilan blog
 
 ## About Laravel
 

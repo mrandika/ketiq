@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,6 +15,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        Blade::directive('array', function ($str) {
+            $fruits = 'apple, orange, pear, banana, raspberry, peach';
+            $fruits_ar = explode(', ', $fruits);
+            return $fruits_ar;
+        });
     }
 
     /**

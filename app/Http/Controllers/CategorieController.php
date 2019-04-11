@@ -20,9 +20,8 @@ class CategorieController extends Controller
     public function index()
     {
         //
-        $categories=\App\Categorie::all();
-        $posts=\App\Post::all();
-        return view('/admin',compact('categories', 'posts')); 
+        $categories = \App\Categorie::all();
+        return view('v2/blog/admin/categories/categories', compact('categories'));  
     }
 
     /**
@@ -33,7 +32,7 @@ class CategorieController extends Controller
     public function create()
     {
         //
-        return view('admin/categories/createCategories');
+        return view('v2/blog/admin/categories/create');
     }
 
     /**
@@ -52,7 +51,7 @@ class CategorieController extends Controller
         $categorie = new \App\Categorie;
         $categorie->categorie = $request->get('categorie');
         $categorie->save();
-        return redirect('blog/admin')->with('success', 'Data kategori telah ditambahkan'); 
+        return redirect('blog/admin/panel/categories')->with('success', 'Data kategori telah ditambahkan'); 
     }
 
     /**
