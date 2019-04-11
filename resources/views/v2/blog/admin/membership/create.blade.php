@@ -21,16 +21,20 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'UA-94034622-3');
-</script>
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-94034622-3');
+
+    </script>
     <!-- /END GA -->
 </head>
 
 @if (Auth::user()->email === "admin@blog.com")
-    
+
 <body>
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
@@ -38,11 +42,13 @@
             <nav class="navbar navbar-expand-lg main-navbar">
                 <form class="form-inline mr-auto">
                     <ul class="navbar-nav mr-3">
-                        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+                        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i
+                                    class="fas fa-bars"></i></a></li>
                     </ul>
                 </form>
                 <ul class="navbar-nav navbar-right">
-                    <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                    <li class="dropdown"><a href="#" data-toggle="dropdown"
+                            class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                             <img alt="image" src="{{asset('image/profile.jpg')}}" class="rounded-circle mr-1">
                             <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->name}}</div>
                         </a>
@@ -68,22 +74,25 @@
             <div class="main-sidebar sidebar-style-2">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
-                        <a href="index.html">Stisla</a>
+                        <a href="{{action('PostController@index')}}">Blog</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="index.html">St</a>
+                        <a href="{{action('PostController@index')}}">B</a>
                     </div>
                     <ul class="sidebar-menu">
-                            <li class="menu-header">Dashboard</li>
-                            <li class=""><a class="nav-link" href="{{action('PostController@index')}}"><i class="fas fa-pen"></i>
-                                    <span>Post</span></a></li>
-                            <li class=""><a class="nav-link" href="{{action('CategorieController@index')}}"><i class="fas fa-bars"></i>
-                                    <span>Categories</span></a></li>
-                                    @if (Auth::user()->email === "admin@blog.com")
-                                    <li class=""><a class="nav-link" href="{{action('MembershipController@index')}}"><i class="fas fa-users-cog"></i>
-                                            <span>User Configuration</span></a></li>
-                                    @endif
-                        </ul>
+                        <li class="menu-header">Dashboard</li>
+                        <li class=""><a class="nav-link" href="{{action('PostController@index')}}"><i
+                                    class="fas fa-pen"></i>
+                                <span>Post</span></a></li>
+                        <li class=""><a class="nav-link" href="{{action('CategorieController@index')}}"><i
+                                    class="fas fa-bars"></i>
+                                <span>Categories</span></a></li>
+                        @if (Auth::user()->email === "admin@blog.com")
+                        <li class=""><a class="nav-link" href="{{action('MembershipController@index')}}"><i
+                                    class="fas fa-users-cog"></i>
+                                <span>User Configuration</span></a></li>
+                        @endif
+                    </ul>
             </div>
 
             <!-- Main Content -->
@@ -91,7 +100,8 @@
                 <section class="section">
                     <div class="section-header">
                         <div class="section-header-back">
-                            <a href="{{action('MembershipController@index')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                            <a href="{{action('MembershipController@index')}}" class="btn btn-icon"><i
+                                    class="fas fa-arrow-left"></i></a>
                         </div>
                         <h1>Enroll New User</h1>
                         <div class="section-header-breadcrumb">
@@ -124,7 +134,8 @@
                         </div>
 
                         @endif
-                        <form method="POST" action="{{action('MembershipController@store')}}" enctype="multipart/form-data">
+                        <form method="POST" action="{{action('MembershipController@store')}}"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-12">
@@ -134,42 +145,49 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="form-group row mb-4">
-                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Fullname</label>
+                                                <label
+                                                    class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Fullname</label>
                                                 <div class="col-sm-12 col-md-7">
                                                     <input type="text" class="form-control" name="name">
                                                 </div>
                                             </div>
                                             <div class="form-group row mb-4">
-                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Email</label>
+                                                <label
+                                                    class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Email</label>
                                                 <div class="col-sm-12 col-md-7">
                                                     <input type="email" class="form-control" name="email">
                                                 </div>
                                             </div>
                                             <div class="form-group row mb-4">
-                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Password</label>
+                                                <label
+                                                    class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Password</label>
                                                 <div class="col-sm-12 col-md-7">
                                                     <input type="password" class="form-control" name="password">
                                                 </div>
                                             </div>
                                             <div class="form-group row mb-4">
-                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Password
+                                                <label
+                                                    class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Password
                                                     Confirmation</label>
                                                 <div class="col-sm-12 col-md-7">
                                                     <input type="password" class="form-control" name="confirmpassword">
                                                 </div>
                                             </div>
                                             <div class="form-group row mb-4">
-                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Category</label>
+                                                <label
+                                                    class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Category</label>
                                                 <div class="col-sm-12 col-md-7">
                                                     <select class="form-control selectric" name="membership">
                                                         @foreach ($memberships as $membership)
-                                                        <option value="{{$membership->id}}">{{$membership->member}}</option>
+                                                        <option value="{{$membership->id}}">{{$membership->member}}
+                                                        </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row mb-4">
-                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                                                <label
+                                                    class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                                                 <div class="col-sm-12 col-md-7">
                                                     <button class="btn btn-primary">Enroll</button>
                                                 </div>

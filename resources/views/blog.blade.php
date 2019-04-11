@@ -85,7 +85,7 @@
                             <h6 class="text-muted card-subtitle mb-2 mt-2">Oleh {{ $post->uploadedBy }}, pada
                                 {{\Carbon\Carbon::parse($post->created_at)->format('l, d F Y H:i')}}.</h6>
                                 
-                                {!!$post->content!!}
+                            <p>{{$post->headline}}</p>
                         </div>
                     </div>
                     @endforeach

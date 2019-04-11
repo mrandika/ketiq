@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Enroll &mdash; Blog</title>
+    <title>Media Library &mdash; Blog</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{asset('modules/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('modules/fontawesome/css/all.min.css')}}">
 
     <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{asset('modules/summernote/summernote-bs4.css')}}">
-    <link rel="stylesheet" href="{{asset('modules/jquery-selectric/selectric.css')}}">
+    <link rel="stylesheet" href="{{asset('modules/chocolat/dist/css/chocolat.css')}}">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{asset('css/dashboard/style.css')}}">
@@ -32,8 +31,6 @@
     </script>
     <!-- /END GA -->
 </head>
-
-@if (Auth::user()->email === "admin@blog.com")
 
 <body>
     <div id="app">
@@ -87,10 +84,16 @@
                         <li class=""><a class="nav-link" href="{{action('CategorieController@index')}}"><i
                                     class="fas fa-bars"></i>
                                 <span>Categories</span></a></li>
+                        <li class="active"><a class="nav-link" href="{{action('MediaController@index')}}"><i
+                                    class="far fa-file-image"></i>
+                                <span>Media Library</span></a></li>
                         @if (Auth::user()->email === "admin@blog.com")
                         <li class=""><a class="nav-link" href="{{action('MembershipController@index')}}"><i
                                     class="fas fa-users-cog"></i>
                                 <span>User Configuration</span></a></li>
+                        <li class=""><a class="nav-link" href="{{action('ActivityController@index')}}"><i
+                                    class="fas fa-history"></i>
+                                <span>History</span></a></li>
                         @endif
                     </ul>
             </div>
@@ -99,71 +102,29 @@
             <div class="main-content">
                 <section class="section">
                     <div class="section-header">
-                        <div class="section-header-back">
-                            <a href="{{action('CategorieController@index')}}" class="btn btn-icon"><i
-                                    class="fas fa-arrow-left"></i></a>
-                        </div>
-                        <h1>Add New Category</h1>
+                        <h1>Media Library</h1>
                         <div class="section-header-breadcrumb">
-                            <div class="breadcrumb-item"><a
-                                    href="{{action('CategorieController@index')}}">Categories</a></div>
-                            <div class="breadcrumb-item">Add New Category</div>
+                            <div class="breadcrumb-item"><a href="{{action('ActivityController@index')}}">Media</a>
+                            </div>
+                            <div class="breadcrumb-item">All</div>
                         </div>
                     </div>
 
                     <div class="section-body">
-                        <h2 class="section-title">Add New Category</h2>
+                        <h2 class="section-title">Media Library</h2>
                         <p class="section-lead">
-                            On this page you can add a new categories and fill in all fields.
+                            On this page you can see all media that have been posted in your blog.
                         </p>
-                        @if ($errors->any())
-                        <div class="alert alert-danger" role="alert">
-                            <div class="alert alert-danger alert-has-icon">
-                                <div class="alert-icon"><i class="fas fa-exclamation-circle"></i></i></div>
-                                <div class="alert-body">
-                                    <div class="alert-title">Error</div>
-                                    <ol>
-                                        @foreach ($errors->all() as $error)
-                                        <li>
-                                            <p class="mb-0">{{ $error }}</p>
-                                        </li>
-                                        @endforeach
-                                    </ol>
-                                </div>
-                            </div>
 
+                        <div class="gallery gallery-md">
+                            @foreach ($images as $image)
+                            <div class="gallery-item" data-image="{{url('uploads/'.$image->featuredImage)}}"
+                                data-title="{{$image->title}}" href="{{url('uploads/'.$image->featuredImage)}}"
+                                title="{{$image->title}}">
+                            </div>
+                            @endforeach
                         </div>
 
-                        @endif
-                        <form method="POST" action="{{action('CategorieController@store')}}"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4>Fill Categories Information</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="form-group row mb-4">
-                                                <label
-                                                    class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name</label>
-                                                <div class="col-sm-12 col-md-7">
-                                                    <input type="text" class="form-control" name="categorie">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row mb-4">
-                                                <label
-                                                    class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-                                                <div class="col-sm-12 col-md-7">
-                                                    <button class="btn btn-primary">Add</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </section>
             </div>
@@ -189,19 +150,15 @@
     <script src="{{asset('js/dashboard/stisla.js')}}"></script>
 
     <!-- JS Libraies -->
-    <script src="{{asset('modules/summernote/summernote-bs4.js')}}"></script>
-    <script src="{{asset('modules/jquery-selectric/jquery.selectric.min.js')}}"></script>
     <script src="{{asset('modules/upload-preview/assets/js/jquery.uploadPreview.min.js')}}"></script>
     <script src="{{asset('modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')}}"></script>
 
     <!-- Page Specific JS File -->
-    <script src="{{asset('js/dashboard/page/features-post-create.js')}}"></script>
+    <script src="{{asset('modules/chocolat/dist/js/jquery.chocolat.min.js')}}"></script>
 
     <!-- Template JS File -->
     <script src="{{asset('js/dashboard/scripts.js')}}"></script>
     <script src="{{asset('js/dashboard/custom.js')}}"></script>
 </body>
-
-@endif
 
 </html>

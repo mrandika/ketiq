@@ -41,5 +41,7 @@ Route::resource('blog/admin', 'PostController');
 Route::resource('blog/admin/panel/categories', 'CategorieController');
 Route::resource('blog/admin/panel/comment', 'CommentController');
 Route::resource('blog/admin/panel/membership', 'MembershipController');
+Route::resource('blog/admin/panel/activity', 'ActivityController');
+Route::resource('blog/admin/panel/media', 'MediaController');
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -22,6 +22,7 @@ class CreatePostsTable extends Migration
             $table->unsignedInteger('categoriesId');
             $table->foreign('categoriesId')->references('id')->on('categories');
             $table->string('title');
+            $table->string('headline');
             $table->text('content');
             $table->string('uploadedBy');
             $table->text('tags')->nullable();

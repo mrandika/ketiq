@@ -72,6 +72,7 @@ class PostController extends Controller
         $post->tags = $request->get('tags');
         $post->categoriesId = $request->get('categories');
         $post->title = $request->get('title');
+        $post->headline = $request->get('headline');
         $post->content = $request->get('content');
         $post->uploadedBy = $request->get('author');
         $post->save();
@@ -140,6 +141,7 @@ class PostController extends Controller
         $post->categoriesId = $request->get('categories');
         $post->tags = $request->get('tags');
         $post->title = $request->get('title');
+        $post->headline = $request->get('headline');
         $post->content = $request->get('content');
         $post->uploadedBy = $request->get('author');
         $post->save();

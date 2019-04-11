@@ -75,7 +75,7 @@
                                     <h4 class="card-title"><a href="{{ action('PostController@show', $post->id)}} ">{{$post->title}}</a></h4>
                                     <h6 class="text-muted card-subtitle mb-2 mt-2">Oleh {{ $post->uploadedBy }}, pada
                                         {{$post->created_at}}.</h6>
-                                        {!!$post->content!!}
+                                        <p>{{$post->headline}}</p>
                                 </div>
                             </div>
                             @endforeach

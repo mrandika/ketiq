@@ -32,6 +32,7 @@
     <!-- /END GA -->
 </head>
 @if (Auth::user()->email === "admin@blog.com")
+
 <body>
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
@@ -39,11 +40,13 @@
             <nav class="navbar navbar-expand-lg main-navbar">
                 <form class="form-inline mr-auto">
                     <ul class="navbar-nav mr-3">
-                        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+                        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i
+                                    class="fas fa-bars"></i></a></li>
                     </ul>
                 </form>
                 <ul class="navbar-nav navbar-right">
-                    <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                    <li class="dropdown"><a href="#" data-toggle="dropdown"
+                            class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                             <img alt="image" src="{{asset('image/profile.jpg')}}" class="rounded-circle mr-1">
                             <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->name}}</div>
                             <div class="dropdown-menu dropdown-menu-right">
@@ -63,7 +66,8 @@
                                     <i class="fas fa-sign-out-alt"></i>
                                     {{ __('Logout') }}
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
                                         @csrf
                                     </form>
                                 </a>
@@ -81,12 +85,23 @@
                     </div>
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
-                        <li class=""><a class="nav-link" href="{{action('PostController@index')}}"><i class="fas fa-pen"></i>
+                        <li class=""><a class="nav-link" href="{{action('PostController@index')}}"><i
+                                    class="fas fa-pen"></i>
                                 <span>Post</span></a></li>
-                        <li class="active"><a class="nav-link" href="{{action('CategorieController@index')}}"><i class="fas fa-bars"></i>
+                        <li class="active"><a class="nav-link" href="{{action('CategorieController@index')}}"><i
+                                    class="fas fa-bars"></i>
                                 <span>Categories</span></a></li>
-                        <li class=""><a class="nav-link" href="{{action('MembershipController@index')}}"><i class="fas fa-users-cog"></i>
+                        <li class=""><a class="nav-link" href="{{action('MediaController@index')}}"><i
+                                    class="far fa-file-image"></i>
+                                <span>Media Library</span></a></li>
+                        @if (Auth::user()->email === "admin@blog.com")
+                        <li class=""><a class="nav-link" href="{{action('MembershipController@index')}}"><i
+                                    class="fas fa-users-cog"></i>
                                 <span>User Configuration</span></a></li>
+                        <li class=""><a class="nav-link" href="{{action('ActivityController@index')}}"><i
+                                    class="fas fa-history"></i>
+                                <span>History</span></a></li>
+                        @endif
                     </ul>
             </div>
 
@@ -115,7 +130,8 @@
                                     <div class="card-body">
                                         <ul class="nav nav-pills">
                                             <li class="nav-item">
-                                                <a class="nav-link active" href="#">All <span class="badge badge-white">{{\App\Categorie::count()}}</span></a>
+                                                <a class="nav-link active" href="#">All <span
+                                                        class="badge badge-white">{{\App\Categorie::count()}}</span></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -153,13 +169,16 @@
                                                 <td>{{$categorie->id}}</td>
                                                 <td>{{$categorie->categorie}}
                                                     <div class="table-links">
-                                                        <form action="{{action('CategorieController@destroy', $categorie->id)}}"
+                                                        <form
+                                                            action="{{action('CategorieController@destroy', $categorie->id)}}"
                                                             method="post">
                                                             @csrf
                                                             <input name="_method" type="hidden" value="DELETE">
-                                                            <a href='#' class="text-danger" onclick='this.parentNode.submit(); return false;'>Remove</a>
+                                                            <a href='#' class="text-danger"
+                                                                onclick='this.parentNode.submit(); return false;'>Remove</a>
                                                         </form>
-                                                    </div></td>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </table>
@@ -204,4 +223,5 @@
     <script src="{{asset('js/dashboard/custom.js')}}"></script>
 </body>
 @endif
+
 </html>

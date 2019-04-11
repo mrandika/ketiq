@@ -66,7 +66,7 @@
                         {{\Carbon\Carbon::parse($post->created_at)->format('l, d F Y H:i')}} </span></p>
                 <p>Posted under <a href="{{url('blog/filter', $post->categoriesId)}}">{{\App\Categorie::select('categorie')->where('id',
                                 $post->categoriesId)->first()->categorie}}</a></p>
-                {{-- TODO: Edit Share Link --}}
+                                
                 <!-- Sharingbutton Facebook -->
                 <a class="resp-sharing-button__link"
                     href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fsharingbuttons.io" target="_blank"
@@ -172,6 +172,7 @@
                 <img class="mb-5" src="{{url('uploads/'.$post->featuredImage)}}" alt="" style="width: 100%">
                 @endif
 
+                <p>{{$post->headline}}</p>
                 {!! $post->content !!}
 
                 <p>Tags: {{$post->tags}}</p>
@@ -345,6 +346,7 @@
         var modal = $(this)
         modal.find('.modal-body textarea').val(comment)
     })
+
 </script>
 @endforeach
 

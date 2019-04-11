@@ -72,10 +72,10 @@
             <div class="main-sidebar sidebar-style-2">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
-                        <a href="index.html">Stisla</a>
+                        <a href="{{action('PostController@index')}}">Blog</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="index.html">St</a>
+                        <a href="{{action('PostController@index')}}">B</a>
                     </div>
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
@@ -153,9 +153,19 @@
                                             </div>
                                             <div class="form-group row mb-4">
                                                 <label
+                                                    class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Headline</label>
+                                                <div class="col-sm-12 col-md-7">
+                                                    <input type="text" class="form-control" name="headline"
+                                                        value="{{$post->headline}}">
+                                                    <p>Tell us a bit about your post.</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row mb-4">
+                                                <label
                                                     class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Tags</label>
                                                 <div class="col-sm-12 col-md-7">
-                                                    <input type="text" class="form-control" name="tags" value="{{$post->tags}}">
+                                                    <input type="text" class="form-control" name="tags"
+                                                        value="{{$post->tags}}">
                                                     <p>Divide your tags with comma (,)</p>
                                                 </div>
                                             </div>
