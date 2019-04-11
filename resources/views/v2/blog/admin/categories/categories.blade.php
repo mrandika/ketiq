@@ -31,7 +31,6 @@
     </script>
     <!-- /END GA -->
 </head>
-@if (Auth::user()->email === "admin@blog.com")
 
 <body>
     <div id="app">
@@ -222,6 +221,5 @@
     <script src="{{asset('js/dashboard/scripts.js')}}"></script>
     <script src="{{asset('js/dashboard/custom.js')}}"></script>
 </body>
-@endif
 
 </html>

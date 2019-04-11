@@ -85,6 +85,9 @@
                         <li class=""><a class="nav-link" href="{{action('CategorieController@index')}}"><i
                                     class="fas fa-bars"></i>
                                 <span>Categories</span></a></li>
+                        <li class=""><a class="nav-link" href="{{action('MediaController@index')}}"><i
+                                    class="far fa-file-image"></i>
+                                <span>Media Library</span></a></li>
                         @if (Auth::user()->email === "admin@blog.com")
                         <li class=""><a class="nav-link" href="{{action('MembershipController@index')}}"><i
                                     class="fas fa-users-cog"></i>

@@ -66,10 +66,10 @@
                         {{\Carbon\Carbon::parse($post->created_at)->format('l, d F Y H:i')}} </span></p>
                 <p>Posted under <a href="{{url('blog/filter', $post->categoriesId)}}">{{\App\Categorie::select('categorie')->where('id',
                                 $post->categoriesId)->first()->categorie}}</a></p>
-                                
+
                 <!-- Sharingbutton Facebook -->
                 <a class="resp-sharing-button__link"
-                    href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fsharingbuttons.io" target="_blank"
+                    href="https://facebook.com/sharer/sharer.php?u={{route('admin.show', $post->id)}}" target="_blank"
                     rel="noopener" aria-label="">
                     <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small">
                         <div aria-hidden="true"
@@ -84,7 +84,7 @@
 
                 <!-- Sharingbutton Twitter -->
                 <a class="resp-sharing-button__link"
-                    href="https://twitter.com/intent/tweet/?text=Super%20fast%20and%20easy%20Social%20Media%20Sharing%20Buttons.%20No%20JavaScript.%20No%20tracking.&amp;url=http%3A%2F%2Fsharingbuttons.io"
+                    href="https://twitter.com/intent/tweet/?text={{$post->title}};url={{route('admin.show', $post->id)}}"
                     target="_blank" rel="noopener" aria-label="">
                     <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
                         <div aria-hidden="true"
@@ -99,7 +99,7 @@
 
                 <!-- Sharingbutton E-Mail -->
                 <a class="resp-sharing-button__link"
-                    href="mailto:?subject=Super%20fast%20and%20easy%20Social%20Media%20Sharing%20Buttons.%20No%20JavaScript.%20No%20tracking.&amp;body=http%3A%2F%2Fsharingbuttons.io"
+                    href="mailto:?subject={{$post->title}};body={{route('admin.show', $post->id)}}"
                     target="_self" rel="noopener" aria-label="">
                     <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small">
                         <div aria-hidden="true"
@@ -116,7 +116,7 @@
 
                 <!-- Sharingbutton Reddit -->
                 <a class="resp-sharing-button__link"
-                    href="https://reddit.com/submit/?url=http%3A%2F%2Fsharingbuttons.io&amp;resubmit=true&amp;title=Super%20fast%20and%20easy%20Social%20Media%20Sharing%20Buttons.%20No%20JavaScript.%20No%20tracking."
+                    href="https://reddit.com/submit/?url={{route('admin.show', $post->id)}};resubmit=true&amp;title={{$post->title}}"
                     target="_blank" rel="noopener" aria-label="">
                     <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small">
                         <div aria-hidden="true"
@@ -137,7 +137,7 @@
 
                 <!-- Sharingbutton WhatsApp -->
                 <a class="resp-sharing-button__link"
-                    href="whatsapp://send?text=Super%20fast%20and%20easy%20Social%20Media%20Sharing%20Buttons.%20No%20JavaScript.%20No%20tracking.%20http%3A%2F%2Fsharingbuttons.io"
+                    href="whatsapp://send?text={{$post->title}} - {{route('admin.show', $post->id)}}"
                     target="_blank" rel="noopener" aria-label="">
                     <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small">
                         <div aria-hidden="true"
@@ -152,7 +152,7 @@
 
                 <!-- Sharingbutton Telegram -->
                 <a class="resp-sharing-button__link"
-                    href="https://telegram.me/share/url?text=Super%20fast%20and%20easy%20Social%20Media%20Sharing%20Buttons.%20No%20JavaScript.%20No%20tracking.&amp;url=http%3A%2F%2Fsharingbuttons.io"
+                    href="https://telegram.me/share/url?text={{$post->title}};url={{route('admin.show', $post->id)}}"
                     target="_blank" rel="noopener" aria-label="">
                     <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small">
                         <div aria-hidden="true"

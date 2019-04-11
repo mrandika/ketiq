@@ -70,27 +70,31 @@
                 </ul>
             </nav>
             <div class="main-sidebar sidebar-style-2">
-                <aside id="sidebar-wrapper">
-                    <div class="sidebar-brand">
-                        <a href="{{action('PostController@index')}}">Blog</a>
-                    </div>
-                    <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="{{action('PostController@index')}}">B</a>
-                    </div>
-                    <ul class="sidebar-menu">
-                        <li class="menu-header">Dashboard</li>
-                        <li class="dropdown active">
-                            <a href="#" class="nav-link has-dropdown"><i
-                                    class="fas fa-fire"></i><span>Dashboard</span></a>
-                            <ul class="dropdown-menu">
-                                <li><a class="nav-link active" href="{{action('PostController@index')}}">Post</a></li>
-                                <li><a class="nav-link" href="{{action('CategorieController@index')}}">Categories</a>
-                                </li>
-                                <li><a class="nav-link" href="{{url('v2/categories')}}">User</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-            </div>
+                    <aside id="sidebar-wrapper">
+                        <div class="sidebar-brand">
+                            <a href="{{action('PostController@index')}}">Blog</a>
+                        </div>
+                        <div class="sidebar-brand sidebar-brand-sm">
+                            <a href="{{action('PostController@index')}}">B</a>
+                        </div>
+                        <ul class="sidebar-menu">
+                            <li class="menu-header">Dashboard</li>
+                            <li class=""><a class="nav-link" href="{{action('PostController@index')}}"><i
+                                        class="fas fa-pen"></i>
+                                    <span>Post</span></a></li>
+                            <li class=""><a class="nav-link" href="{{action('CategorieController@index')}}"><i
+                                        class="fas fa-bars"></i>
+                                    <span>Categories</span></a></li>
+                            <li class=""><a class="nav-link" href="{{action('MediaController@index')}}"><i
+                                        class="far fa-file-image"></i>
+                                    <span>Media Library</span></a></li>
+                            @if (Auth::user()->email === "admin@blog.com")
+                            <li class=""><a class="nav-link" href="{{action('MembershipController@index')}}"><i
+                                        class="fas fa-users-cog"></i>
+                                    <span>User Configuration</span></a></li>
+                            @endif
+                        </ul>
+                </div>
 
             <!-- Main Content -->
             <div class="main-content">

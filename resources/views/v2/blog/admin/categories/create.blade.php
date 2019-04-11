@@ -33,8 +33,6 @@
     <!-- /END GA -->
 </head>
 
-@if (Auth::user()->email === "admin@blog.com")
-
 <body>
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
@@ -87,6 +85,9 @@
                         <li class=""><a class="nav-link" href="{{action('CategorieController@index')}}"><i
                                     class="fas fa-bars"></i>
                                 <span>Categories</span></a></li>
+                        <li class=""><a class="nav-link" href="{{action('MediaController@index')}}"><i
+                                    class="far fa-file-image"></i>
+                                <span>Media Library</span></a></li>
                         @if (Auth::user()->email === "admin@blog.com")
                         <li class=""><a class="nav-link" href="{{action('MembershipController@index')}}"><i
                                     class="fas fa-users-cog"></i>
@@ -202,6 +203,5 @@
     <script src="{{asset('js/dashboard/custom.js')}}"></script>
 </body>
 
-@endif
 
 </html>
