@@ -210,7 +210,7 @@
                                                         <img alt="image" src="{{asset('image/profile.jpg')}}"
                                                             class="rounded-circle" width="35" data-toggle="title"
                                                             title="">
-                                                        <div class="d-inline-block ml-1">{{$post->uploadedBy}}</div>
+                                                        <div class="d-inline-block ml-1">{{ \App\User::select('name')->where('id', $post->uploadedBy)->first()->name }}</div>
                                                     </a>
                                                 </td>
                                                 <td>{{\Carbon\Carbon::parse($post->created_at)->format('d M Y')}}</td>

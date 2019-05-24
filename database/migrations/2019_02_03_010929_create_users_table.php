@@ -32,6 +32,7 @@ class CreateUsersTable extends Migration
                 'membership' => 3,
                 'email' => 'admin@blog.com',
                 'password' => Hash::make('mrandika'),
+                'email_verified_at' => '2002-06-22 00:00:00',
                 'created_at' => '2019-02-03 01:09:29',
                 'updated_at' => '2019-02-03 01:09:29'
             )

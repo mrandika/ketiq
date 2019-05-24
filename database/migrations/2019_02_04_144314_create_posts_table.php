@@ -24,7 +24,8 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->string('headline');
             $table->text('content');
-            $table->string('uploadedBy');
+            $table->unsignedInteger('uploadedBy');
+            $table->foreign('uploadedBy')->references('id')->on('users');
             $table->text('tags')->nullable();
             $table->timestamps();
         });

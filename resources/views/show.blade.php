@@ -62,7 +62,7 @@
             {{-- Content --}}
             <div class="col-md-8">
                 <h1 class="mb-3">{{$post->title}}</h1>
-                <p><span class="by">by</span> <a href="#">{{$post->uploadedBy}}</a> | <span class="date">on
+                <p><span class="by">by</span> <a href="#">{{ \App\User::select('name')->where('id', $post->uploadedBy)->first()->name }}</a> | <span class="date">on
                         {{\Carbon\Carbon::parse($post->created_at)->format('l, d F Y H:i')}} </span></p>
                 <p>Posted under <a href="{{url('blog/filter', $post->categoriesId)}}">{{\App\Categorie::select('categorie')->where('id',
                                 $post->categoriesId)->first()->categorie}}</a></p>

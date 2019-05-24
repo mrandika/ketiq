@@ -62,7 +62,9 @@
             </div>
         </nav>
     </div>
-    <div data-bs-parallax-bg="true" style="height:500px;background-image:url(&quot;http://mrandika.ga/img/poster.jpg&quot;);background-position:center;background-size:cover;"></div>
+    <div data-bs-parallax-bg="true"
+        style="height:500px;background-image:url(&quot;http://mrandika.ga/img/poster.jpg&quot;);background-position:center;background-size:cover;">
+    </div>
     <div class="mb-5 mt-5">
         <div class="container">
             <div class="row">
@@ -78,13 +80,15 @@
 
                     <div class="card mb-3">
                         <div class="card-body">
-                                <img class="card-img-right flex-auto d-none d-lg-block mb-4"
+                            @if ($post->featuredImage != null)
+                            <img class="card-img-right flex-auto d-none d-lg-block mb-4"
                                 src="{{url('uploads/'.$post->featuredImage)}}" style="width: 100%">
+                            @endif
                             <h4 class="card-title"><a
                                     href="{{ action('PostController@show', $post->id)}} ">{{$post->title}}</a></h4>
-                            <h6 class="text-muted card-subtitle mb-2 mt-2">Oleh {{ $post->uploadedBy }}, pada
+                            <h6 class="text-muted card-subtitle mb-2 mt-2">Oleh {{ \App\User::select('name')->where('id', $post->uploadedBy)->first()->name }}, pada
                                 {{\Carbon\Carbon::parse($post->created_at)->format('l, d F Y H:i')}}.</h6>
-                                
+
                             <p>{{$post->headline}}</p>
                         </div>
                     </div>
