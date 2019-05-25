@@ -188,7 +188,6 @@
                                                         <div class="bullet"></div>
                                                         @if (Auth::user()->email_verified_at != null)
                                                         <a href="{{action('PostController@edit', $post->id)}}">Edit</a>
-                                                        @if (\App\Comment::where('onPost', $post->id)->count() === 0)
                                                         <div class="bullet"></div>
                                                         <form action="{{action('PostController@destroy', $post->id)}}"
                                                             method="post">
@@ -197,7 +196,6 @@
                                                             <a href='#' class="text-danger"
                                                                 onclick='this.parentNode.submit(); return false;'>Remove</a>
                                                         </form>
-                                                        @endif
                                                         @endif
                                                     </div>
                                                 </td>
@@ -210,7 +208,9 @@
                                                         <img alt="image" src="{{asset('image/profile.jpg')}}"
                                                             class="rounded-circle" width="35" data-toggle="title"
                                                             title="">
-                                                        <div class="d-inline-block ml-1">{{ \App\User::select('name')->where('id', $post->uploadedBy)->first()->name }}</div>
+                                                        <div class="d-inline-block ml-1">
+                                                            {{ \App\User::select('name')->where('id', $post->uploadedBy)->first()->name }}
+                                                        </div>
                                                     </a>
                                                 </td>
                                                 <td>{{\Carbon\Carbon::parse($post->created_at)->format('d M Y')}}</td>

@@ -125,10 +125,12 @@ class PostController extends Controller
             'content' => 'required',
         ]);
 
-        $post= \App\Post::find($id);
+        $post = \App\Post::find($id);
         $post->hasFeatured = $request->get('didIHavefeaturedImage');
 
         if($request->hasFile('featuredImage')){
+            Storage::disk('public')->delete($post->featuredImage);
+
             $cover = $request->file('featuredImage');
             $extension = $cover->getClientOriginalExtension();
             Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
@@ -158,6 +160,9 @@ class PostController extends Controller
     {
         //
         $post = \App\Post::find($id);
+        if ($post->featuredImage != null) {
+            Storage::disk('public')->delete($post->featuredImage);
+        }
         $post->delete();
         return redirect('blog/admin')->with('success','Data post telah di hapus');
     }
