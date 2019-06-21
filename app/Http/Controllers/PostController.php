@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Storage;
-use File;
+use Storage, File;
+use Redirect, Response;
 
 class PostController extends Controller
 {
@@ -164,6 +164,6 @@ class PostController extends Controller
             Storage::disk('public')->delete($post->featuredImage);
         }
         $post->delete();
-        return redirect('blog/admin')->with('success','Data post telah di hapus');
+        return Response::json($post);
     }
 }

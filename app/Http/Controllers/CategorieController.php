@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Redirect, Response;
 
 class CategorieController extends Controller
 {
@@ -63,8 +64,8 @@ class CategorieController extends Controller
     public function destroy($id)
     {
         //
-        $post = \App\Categorie::find($id);
-        $post->delete();
-        return redirect('blog/admin')->with('success','Data kategori telah di hapus');
+        $categorie = \App\Categorie::find($id);
+        $categorie->delete();
+        return Response::json($categorie);
     }
 }
