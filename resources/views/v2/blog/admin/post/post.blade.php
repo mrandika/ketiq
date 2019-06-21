@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 
 @section('title')
 Posts &mdash; Blog
@@ -99,8 +99,8 @@ active
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="#">{{\App\Categorie::where('id',
-                                                    $post->categoriesId)->first()->categorie}}</a>
+                                        <a href="#">{{\App\Category::where('id',
+                                                    $post->categoriesId)->first()->title}}</a>
                                     </td>
                                     <td>
                                         <a href="#">

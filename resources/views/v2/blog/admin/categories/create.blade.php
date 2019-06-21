@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 
 @section('title')
 Create Categories &mdash; Blog
@@ -14,12 +14,12 @@ active
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{action('CategorieController@index')}}" class="btn btn-icon"><i
+                <a href="{{action('CategoryController@index')}}" class="btn btn-icon"><i
                         class="fas fa-arrow-left"></i></a>
             </div>
             <h1>Add New Category</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item"><a href="{{action('CategorieController@index')}}">Categories</a></div>
+                <div class="breadcrumb-item"><a href="{{action('CategoryController@index')}}">Categories</a></div>
                 <div class="breadcrumb-item">Add New Category</div>
             </div>
         </div>
@@ -48,7 +48,7 @@ active
             </div>
 
             @endif
-            <form method="POST" action="{{action('CategorieController@store')}}" enctype="multipart/form-data">
+            <form method="POST" action="{{action('CategoryController@store')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-12">
@@ -60,7 +60,7 @@ active
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name</label>
                                     <div class="col-sm-12 col-md-7">
-                                        <input type="text" class="form-control" name="categorie">
+                                        <input type="text" class="form-control" name="title">
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">

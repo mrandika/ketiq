@@ -24,21 +24,21 @@ Route::get('portofolio', function () {
 });
 
 Route::get('blog', function () {
-    $posts = DB::table('posts')->get();
-    $categories = DB::table('categories')->get();
-    return view('blog', ['posts' => $posts], ['categories' => $categories]);
+    $posts = App\Post::paginate(8);
+    $categories = App\Category::get();
+    return view('v2/blog/homepage/home', ['posts' => $posts], ['categories' => $categories]);
 })->name('blog.home');
 
 Route::get('blog/filter/{id}', function($id) {
-    $filteredPosts = DB::table('posts')->where('categoriesId', $id)->get();
-    $posts = DB::table('posts')->get();
-    return view('filteredBlog', ['filteredPosts' => $filteredPosts], ['posts' => $posts]);
+    $posts = App\Post::where('categoriesId', $id)->get();
+    $categories = App\Category::get();
+    return view('v2/blog/homepage/filteredPost', ['posts' => $posts], ['categories' => $categories]);
 });
 
 Auth::routes();
 
 Route::resource('blog/admin', 'PostController');
-Route::resource('blog/admin/panel/categories', 'CategorieController');
+Route::resource('blog/admin/panel/categories', 'CategoryController');
 Route::resource('blog/admin/panel/comment', 'CommentController');
 Route::resource('blog/admin/panel/membership', 'MembershipController');
 Route::resource('blog/admin/panel/activity', 'ActivityController');

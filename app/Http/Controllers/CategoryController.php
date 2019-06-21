@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Redirect, Response;
 
-class CategorieController extends Controller
+use App\Category;
+
+class CategoryController extends Controller
 {
 
     public function __construct()
@@ -21,7 +23,7 @@ class CategorieController extends Controller
     public function index()
     {
         //
-        $categories = \App\Categorie::all();
+        $categories = Category::all();
         return view('v2/blog/admin/categories/categories', compact('categories'));  
     }
 
@@ -46,11 +48,11 @@ class CategorieController extends Controller
     {
         //
         $validatedData = $request->validate([
-            'categorie' => 'required|unique:categories|max:255',
+            'title' => 'required|unique:categories|max:255',
         ]);
 
-        $categorie = new \App\Categorie;
-        $categorie->categorie = $request->get('categorie');
+        $categorie = new Category;
+        $categorie->title = $request->get('title');
         $categorie->save();
         return redirect('blog/admin/panel/categories')->with('success', 'Data kategori telah ditambahkan'); 
     }
@@ -64,7 +66,7 @@ class CategorieController extends Controller
     public function destroy($id)
     {
         //
-        $categorie = \App\Categorie::find($id);
+        $categorie = Categorie::find($id);
         $categorie->delete();
         return Response::json($categorie);
     }

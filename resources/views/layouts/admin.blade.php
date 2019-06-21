@@ -25,8 +25,8 @@
     <link rel="stylesheet" href="{{asset('modules/jquery-selectric/selectric.css')}}">
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{asset('css/dashboard/style.css')}}">
-    <link rel="stylesheet" href="{{asset('css/dashboard/components.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin/style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin/components.css')}}">
 
 </head>
 
@@ -44,7 +44,7 @@
                 <ul class="navbar-nav navbar-right">
                     <li class="dropdown"><a href="#" data-toggle="dropdown"
                             class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                            <img alt="image" src="{{asset('image/profile.jpg')}}" class="rounded-circle mr-1">
+                            <img alt="image" src="{{ asset('image/profile.jpg') }}" class="rounded-circle mr-1">
                             <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->name}}</div>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <div class="dropdown-title">Logged in 5 min ago</div>
@@ -86,7 +86,7 @@
                         <li class=@yield('postActive')><a class="nav-link" href="{{action('PostController@index')}}"><i
                                     class="fas fa-pen"></i>
                                 <span>Post</span></a></li>
-                        <li class=@yield('categorieActive')><a class="nav-link" href="{{action('CategorieController@index')}}"><i
+                        <li class=@yield('categorieActive')><a class="nav-link" href="{{action('CategoryController@index')}}"><i
                                     class="fas fa-bars"></i>
                                 <span>Categories</span></a></li>
                         <li class=@yield('mediaActive')><a class="nav-link" href="{{action('MediaController@index')}}"><i

@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 
 @section('title')
 Create Post &mdash; Blog
@@ -87,7 +87,7 @@ active
                                     <div class="col-sm-12 col-md-7">
                                         <select class="form-control selectric" name="categories">
                                             @foreach ($categories as $categorie)
-                                            <option value="{{$categorie->id}}">{{$categorie->categorie}}
+                                            <option value="{{$categorie->id}}">{{$categorie->title}}
                                             </option>
                                             @endforeach
                                         </select>

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+use App\User;
+use App\Membership;
+
 class MembershipController extends Controller
 {
     public function __construct()
@@ -19,7 +22,7 @@ class MembershipController extends Controller
     public function index()
     {
         //
-        $users = \App\User::all();
+        $users = User::all();
         return view('v2/blog/admin/membership/membership', compact('users'));
     }
 
@@ -31,7 +34,7 @@ class MembershipController extends Controller
     public function create()
     {
         //
-        $memberships = \App\Membership::all();
+        $memberships = Membership::all();
         return view('v2/blog/admin/membership/create', compact('memberships'));
     }
 
@@ -51,7 +54,7 @@ class MembershipController extends Controller
             'password' => 'required|confirmed',
         ]);
 
-        $user = new \App\User;
+        $user = new User;
         $password = Hash::make($request->get('password'));
         $user->name = $request->get('name');
         $user->membership = $request->get('membership');
@@ -82,8 +85,8 @@ class MembershipController extends Controller
     public function edit($id)
     {
         //
-        $user = \App\User::find($id);
-        $memberships = \App\Membership::all();
+        $user = User::find($id);
+        $memberships = Membership::all();
         return view('v2/blog/admin/membership/edit',compact('user', 'memberships'));  
     }
 
@@ -104,7 +107,7 @@ class MembershipController extends Controller
             'oldpassword' => 'required',
         ]);
 
-        $user = \App\User::find($id);
+        $user = User::find($id);
         $user->name = $request->get('name');
         $user->membership = $request->get('membership');
         $user->email = $request->get('email');
@@ -133,7 +136,7 @@ class MembershipController extends Controller
     public function destroy($id)
     {
         //
-        $user = \App\User::find($id);
+        $user = User::find($id);
         $user->delete();
         return redirect('blog/admin/panel/membership')->with('success','Data user telah di hapus');
     }

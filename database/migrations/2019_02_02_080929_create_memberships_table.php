@@ -15,23 +15,23 @@ class CreateMembershipsTable extends Migration
     {
         Schema::create('memberships', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('member');
+            $table->string('type');
             $table->timestamps();
         });
 
         DB::table('memberships')->insert(
             array(
-                'member' => 'FREE'
+                'type' => 'FREE'
             )
         );
         DB::table('memberships')->insert(
             array(
-                'member' => 'PREMIUM'
+                'type' => 'PREMIUM'
             )
         );
         DB::table('memberships')->insert(
             array(
-                'member' => 'PLATINUM'
+                'type' => 'PLATINUM'
             )
         );
     }

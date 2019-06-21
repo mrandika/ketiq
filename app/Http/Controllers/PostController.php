@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use Storage, File;
 use Redirect, Response;
 
+use App\Post;
+use App\Category;
+use App\Comment;
+use App\User;
+
 class PostController extends Controller
 {
 
@@ -21,8 +26,8 @@ class PostController extends Controller
     public function index()
     {
         //
-        $posts=\App\Post::all();
-        $categories=\App\Categorie::all();
+        $posts= Post::all();
+        $categories= Category::all();
         return view('v2/blog/admin/post/post',compact('posts', 'categories'));  
     }
 
@@ -34,7 +39,7 @@ class PostController extends Controller
     public function create()
     {
         //
-        $categories=\App\Categorie::all();
+        $categories= Category::all();
         return view('v2/blog/admin/post/create', compact('categories'));
     }
 
@@ -56,7 +61,7 @@ class PostController extends Controller
             'author' => 'required',
         ]);
 
-        $post = new \App\Post;
+        $post = new Post;
         $post->hasFeatured = $request->get('didIHavefeaturedImage');
 
         if($request->hasFile('featuredImage')){
@@ -89,10 +94,11 @@ class PostController extends Controller
     public function show($id)
     {
         //
-        $post = \App\Post::find($id);
-        $posts = \App\Post::all();
-        $comments = \App\Comment::all()->where('onPost', $id);
-        return view('show',compact('post','posts','comments'));
+        $posts = Post::all();
+        $post = Post::find($id);
+        $categories = Category::all();
+        $comments = Comment::all()->where('onPost', $id);
+        return view('v2/blog/homepage/post',compact('post', 'posts', 'categories', 'comments'));
     }
 
     /**
@@ -104,9 +110,9 @@ class PostController extends Controller
     public function edit($id)
     {
         //
-        $post = \App\Post::find($id);
-        $user = \App\User::find($id);
-        $categories = \App\Categorie::all();
+        $post = Post::find($id);
+        $user = User::find($id);
+        $categories = Category::all();
         return view('v2/blog/admin/post/edit',compact('post', 'user', 'categories'));  
     }
 
@@ -125,7 +131,7 @@ class PostController extends Controller
             'content' => 'required',
         ]);
 
-        $post = \App\Post::find($id);
+        $post = Post::find($id);
         $post->hasFeatured = $request->get('didIHavefeaturedImage');
 
         if($request->hasFile('featuredImage')){
@@ -159,7 +165,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
-        $post = \App\Post::find($id);
+        $post = Post::find($id);
         if ($post->featuredImage != null) {
             Storage::disk('public')->delete($post->featuredImage);
         }

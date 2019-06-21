@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 
 @section('title')
 Categories &mdash; Blog
@@ -15,7 +15,7 @@ active
         <div class="section-header">
             <h1>Categories</h1>
             <div class="section-header-button">
-                <a href="{{action('CategorieController@create')}}" class="btn btn-primary">New</a>
+                <a href="{{action('CategoryController@create')}}" class="btn btn-primary">New</a>
             </div>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item"><a href="#">Categories</a></div>
@@ -35,7 +35,7 @@ active
                             <ul class="nav nav-pills">
                                 <li class="nav-item">
                                     <a class="nav-link active" href="#">All <span
-                                            class="badge badge-white">{{\App\Categorie::count()}}</span></a>
+                                            class="badge badge-white">{{\App\Category::count()}}</span></a>
                                 </li>
                             </ul>
                         </div>
@@ -71,7 +71,7 @@ active
                                 @foreach ($categories as $categorie)
                                 <tr id="categoriesId_{{$categorie->id}}">
                                     <td>{{$categorie->id}}</td>
-                                    <td>{{$categorie->categorie}}
+                                    <td>{{$categorie->title}}
                                         <div class="table-links">
                                             <a href='javascript:void(0)' id="deleteCategories"
                                                 data-id="{{$categorie->id}}" class="text-danger">Remove</a>
