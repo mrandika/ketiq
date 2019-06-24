@@ -15,7 +15,7 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('hasFeatured', 3)->nullable();
+            $table->boolean('hasFeatured')->default('0');
             $table->string('featuredImage')->nullable();
             $table->string('mime')->nullable();
             $table->string('original_filename')->nullable();
@@ -27,6 +27,7 @@ class CreatePostsTable extends Migration
             $table->unsignedInteger('uploadedBy');
             $table->foreign('uploadedBy')->references('id')->on('users');
             $table->text('tags')->nullable();
+            $table->bigInteger('likes')->default('0');
             $table->timestamps();
         });
     }

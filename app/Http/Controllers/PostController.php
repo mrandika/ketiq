@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Storage, File;
 use Redirect, Response;
+use Auth;
 
 use App\Post;
 use App\Category;
@@ -26,8 +27,8 @@ class PostController extends Controller
     public function index()
     {
         //
-        $posts= Post::all();
-        $categories= Category::all();
+        $posts = Post::where('uploadedBy', Auth::user()->id)->paginate(15);
+        $categories = Category::all();
         return view('v2/blog/admin/post/post',compact('posts', 'categories'));  
     }
 
@@ -62,16 +63,17 @@ class PostController extends Controller
         ]);
 
         $post = new Post;
-        $post->hasFeatured = $request->get('didIHavefeaturedImage');
 
         if($request->hasFile('featuredImage')){
             $cover = $request->file('featuredImage');
             $extension = $cover->getClientOriginalExtension();
-            Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
+            Storage::disk('public_postsImage')->put($cover->getFilename().'.'.$extension,  File::get($cover));
 
             $post->mime = $cover->getClientMimeType();
             $post->original_filename = $cover->getClientOriginalName();
             $post->featuredImage = $cover->getFilename().'.'.$extension;
+
+            $post->hasFeatured = 1;
         }
 
         $post->tags = $request->get('tags');
@@ -102,6 +104,21 @@ class PostController extends Controller
     }
 
     /**
+     * Search the specified keyword.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        //
+        $keyword = $request->post('keyword');
+        $posts = Post::where('title', 'LIKE', '%'.$keyword.'%')->get();
+        $categories = Category::get();
+
+        return view('v2/blog/homepage/filteredPost', compact('posts', 'categories'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -112,7 +129,7 @@ class PostController extends Controller
         //
         $post = Post::find($id);
         $user = User::find($id);
-        $categories = Category::all();
+        $categories = Category::where('byUser', Auth::user()->id)->get();
         return view('v2/blog/admin/post/edit',compact('post', 'user', 'categories'));  
     }
 
@@ -132,18 +149,19 @@ class PostController extends Controller
         ]);
 
         $post = Post::find($id);
-        $post->hasFeatured = $request->get('didIHavefeaturedImage');
 
         if($request->hasFile('featuredImage')){
-            Storage::disk('public')->delete($post->featuredImage);
+            Storage::disk('public_postsImage')->delete($post->featuredImage);
 
             $cover = $request->file('featuredImage');
             $extension = $cover->getClientOriginalExtension();
-            Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
+            Storage::disk('public_postsImage')->put($cover->getFilename().'.'.$extension,  File::get($cover));
 
             $post->mime = $cover->getClientMimeType();
             $post->original_filename = $cover->getClientOriginalName();
             $post->featuredImage = $cover->getFilename().'.'.$extension;
+
+            $post->hasFeatured = 1;
         }
 
         $post->categoriesId = $request->get('categories');
@@ -167,7 +185,7 @@ class PostController extends Controller
         //
         $post = Post::find($id);
         if ($post->featuredImage != null) {
-            Storage::disk('public')->delete($post->featuredImage);
+            Storage::disk('public_postsImage')->delete($post->featuredImage);
         }
         $post->delete();
         return Response::json($post);

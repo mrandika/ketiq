@@ -17,8 +17,10 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->unsignedInteger('membership')->nullable()->default('1');
+            $table->unsignedInteger('membership')->default('1');
             $table->foreign('membership')->references('id')->on('memberships');
+            $table->string('photo', 50)->default('empty.png');
+            $table->text('about')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -30,11 +32,13 @@ class CreateUsersTable extends Migration
             array(
                 'name' => 'Admin',
                 'membership' => 3,
+                'photo' => 'Admin.jpg',
+                'about' => 'Hi! I\'am a Content Creator, Moderator, and Admin at Ketiq!',
                 'email' => 'admin@blog.com',
                 'password' => Hash::make('mrandika'),
                 'email_verified_at' => '2002-06-22 00:00:00',
-                'created_at' => '2019-02-03 01:09:29',
-                'updated_at' => '2019-02-03 01:09:29'
+                'created_at' => '2002-06-22 00:00:00',
+                'updated_at' => '2002-06-22 00:00:00'
             )
         );
     }

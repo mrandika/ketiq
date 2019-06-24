@@ -88,7 +88,7 @@ active
                                     <td>{{$user->id}}</td>
                                     <td>
                                         <a href="#">
-                                            <img alt="image" src="{{asset('image/profile.jpg')}}" class="rounded-circle"
+                                            <img alt="image" src="{{ url('uploads/users/'.$user->photo) }}" class="rounded-circle"
                                                 width="35" data-toggle="title" title="">
                                             <div class="d-inline-block ml-1">{{$user->name}}</div>
                                         </a>
@@ -101,7 +101,7 @@ active
                                     </td>
                                     <td>
                                         <div class="badge badge-primary">{{\App\Membership::where('id',
-                                                    $user->membership)->first()->member}}</div>
+                                                    $user->membership)->first()->type}}</div>
                                     </td>
                                     <td>{{$user->email}}</td>
                                     <td>

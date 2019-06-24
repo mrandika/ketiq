@@ -50,7 +50,7 @@
                                         <label for="email">Email</label>
                                         <input id="email" type="email"
                                             class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                            name="email" tabindex="1" required="" autofocus="">
+                                            name="email" tabindex="1" required="">
                                         @if ($errors->has('email'))
                                         <div class="invalid-feedback">
                                             {{$errors->first('email')}}

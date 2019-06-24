@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Redirect, Response;
+use Auth;
 
 use App\Category;
 
@@ -48,12 +49,13 @@ class CategoryController extends Controller
     {
         //
         $validatedData = $request->validate([
-            'title' => 'required|unique:categories|max:255',
+            'title' => 'required|max:255',
         ]);
 
-        $categorie = new Category;
-        $categorie->title = $request->get('title');
-        $categorie->save();
+        $category = new Category;
+        $category->title = $request->get('title');
+        $category->byUser = Auth::user()->id;
+        $category->save();
         return redirect('blog/admin/panel/categories')->with('success', 'Data kategori telah ditambahkan'); 
     }
 
@@ -66,7 +68,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
-        $categorie = Categorie::find($id);
+        $categorie = Category::find($id);
         $categorie->delete();
         return Response::json($categorie);
     }

@@ -21,6 +21,7 @@ class CreateCommentsTable extends Migration
             $table->foreign('fromUser')->references('id')->on('users');
             $table->text('comment');
             $table->string('hasEdited', 3)->nullable();
+            $table->bigInteger('likes')->default('0');
             $table->timestamps();
         });
     }

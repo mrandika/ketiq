@@ -13,6 +13,22 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::group(['namespace' => 'Api'], function () {
+    Route::get('posts/show/all', array(
+        'as' => 'posts-show_all', 
+        'uses' => 'PostController@index'
+    ), function () {
+        return redirect()->action('PostController@index');
+    });
+
+    Route::get('posts/show/{id}', array(
+        'as' => 'posts-show_byId', 
+        'uses' => 'PostController@show'
+    ), function ($id) {
+        return redirect()->action('PostController@show');
+    });
 });

@@ -102,7 +102,7 @@ active
                                             <option value="{{$membership->id}}" @if($user->
                                                 membership==$membership->id)
                                                 selected
-                                                @endif>{{$membership->member}}</option>
+                                                @endif>{{$membership->type}}</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -18,7 +18,7 @@ active
             <div class="alert-body">
                 <div class="alert-title">Warning</div>
                 Your account is not validated. You can't add a new post or editing post until your account
-                is verified.
+                is verified. <br><b><a href="{{ action('MembershipController@form') }}">Verify Now</a></b>
             </div>
         </div>
         @endif
@@ -47,7 +47,7 @@ active
                             <ul class="nav nav-pills">
                                 <li class="nav-item">
                                     <a class="nav-link active" href="#">All <span
-                                            class="badge badge-white">{{\App\Post::count()}}</span></a>
+                                            class="badge badge-white">{{\App\Post::where('uploadedBy', Auth::user()->id)->count()}}</span></a>
                                 </li>
                             </ul>
                         </div>
@@ -119,6 +119,7 @@ active
                                 @endforeach
                             </table>
                         </div>
+                        {{ $posts->links() }}
                     </div>
                 </div>
             </div>

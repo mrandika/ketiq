@@ -92,7 +92,7 @@ active
                                             @foreach ($categories as $categorie)
                                             <option value="{{$categorie->id}}" @if($post->
                                                 categoriesId==$categorie->id) selected
-                                                @endif>{{$categorie->categorie}}</option>
+                                                @endif>{{$categorie->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>

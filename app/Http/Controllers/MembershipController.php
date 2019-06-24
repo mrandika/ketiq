@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Storage, File;
+
+use Carbon\Carbon;
+
+use Intervention\Image\ImageManagerStatic as Image;
 
 use App\User;
 use App\Membership;
+
+use Auth;
 
 class MembershipController extends Controller
 {
@@ -66,14 +73,45 @@ class MembershipController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show Form to Verify the current user.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function form()
     {
         //
+        return view('v2/blog/admin/membership/verify');
+    }
+
+    /**
+     * Verify the specified member.
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function verify(Request $request, $id)
+    {
+        //
+        $validatedData = $request->validate([
+            'userImage' => 'required',
+            'about' => 'required'
+        ]);
+
+        $user = User::find($id);
+
+        $photo = $request->file('userImage');
+        $extension = $photo->getClientOriginalExtension();
+        $name = Auth::user()->name.'.'.$extension;
+        
+        $image_resize = Image::make($photo->getRealPath());              
+        $image_resize->resize(397, 397);
+        $image_resize->save(public_path('uploads/users/' .$name));
+        
+        $user->photo = $name;
+        $user->about = $request->post('about');
+        $user->email_verified_at = Carbon::now()->toDateTimeString();
+
+        $user->save();
+        return redirect('blog/admin')->with('success', 'Data user telah diverifikasi'); 
     }
 
     /**

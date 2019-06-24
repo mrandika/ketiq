@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Comment;
 
+use Redirect, Response;
+
 class CommentController extends Controller
 {
     public function __construct()
@@ -63,11 +65,11 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
         //
         $comment = Comment::find($id);
         $comment->delete();
-        return redirect($request->server('HTTP_REFERER'));
+        return Response::json($comment); 
     }
 }

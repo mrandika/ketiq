@@ -90,7 +90,7 @@ active
                                     <div class="col-sm-12 col-md-7">
                                         <select class="form-control selectric" name="membership">
                                             @foreach ($memberships as $membership)
-                                            <option value="{{$membership->id}}">{{$membership->member}}
+                                            <option value="{{$membership->id}}">{{$membership->type}}
                                             </option>
                                             @endforeach
                                         </select>
