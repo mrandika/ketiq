@@ -23,7 +23,7 @@ use Throwable;
 /**
  * A TestSuite is a composite of Tests. It runs a collection of test cases.
  */
-class TestSuite implements Test, SelfDescribing, IteratorAggregate
+class TestSuite implements IteratorAggregate, SelfDescribing, Test
 {
     /**
      * Enable or disable the backup and restoration of the $GLOBALS array.
@@ -703,10 +703,10 @@ class TestSuite implements Test, SelfDescribing, IteratorAggregate
                     \call_user_func([$this->name, $beforeClassMethod]);
                 }
             }
-        } catch (SkippedTestSuiteError $e) {
+        } catch (SkippedTestSuiteError $error) {
             foreach ($this->tests() as $test) {
                 $result->startTest($test);
-                $result->addFailure($test, $e, 0);
+                $result->addFailure($test, $error, 0);
                 $result->endTest($test, 0);
             }
 
@@ -746,10 +746,25 @@ class TestSuite implements Test, SelfDescribing, IteratorAggregate
             $test->run($result);
         }
 
-        foreach ($hookMethods['afterClass'] as $afterClassMethod) {
-            if ($this->testCase === true && \class_exists($this->name, false) && \method_exists($this->name, $afterClassMethod)) {
-                \call_user_func([$this->name, $afterClassMethod]);
+        try {
+            foreach ($hookMethods['afterClass'] as $afterClassMethod) {
+                if ($this->testCase === true && \class_exists($this->name, false) && \method_exists(
+                    $this->name,
+                    $afterClassMethod
+                )) {
+                    \call_user_func([$this->name, $afterClassMethod]);
+                }
             }
+        } catch (Throwable $t) {
+            $message = "Exception in {$this->name}::$afterClassMethod" . \PHP_EOL . $t->getMessage();
+            $error   = new SyntheticError($message, 0, $t->getFile(), $t->getLine(), $t->getTrace());
+
+            $placeholderTest = clone $test;
+            $placeholderTest->setName($afterClassMethod);
+
+            $result->startTest($placeholderTest);
+            $result->addFailure($placeholderTest, $error, 0);
+            $result->endTest($placeholderTest, 0);
         }
 
         $this->tearDown();
